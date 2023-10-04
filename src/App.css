@@ -5,6 +5,8 @@ body {
   animation: Gradient 20s ease infinite;
   min-height: 100vh;
   color: #E1E1E1;
+  margin: 0;
+  padding: 0;
 }
 
 /* Gradient animation */
@@ -68,6 +70,8 @@ body {
   width: 80%;
   transition: box-shadow 0.3s ease, transform 0.3s ease;  /* Transition for hover effect */
   margin: 0 auto;
+  border: 1px solid whitesmoke; /* Add a white border */
+
 }
 
 /* Hover effect for the navigation bar */
@@ -91,6 +95,7 @@ body {
   padding: 10px;
   font-size: 20px;  /* Slightly larger text size */
 }
+
 
 /* Styling for the links */
 #nav-bar ul li a {

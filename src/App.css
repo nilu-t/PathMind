@@ -1,7 +1,6 @@
 /* Main App styling */
 body {
-  background: linear-gradient(120deg, #202020, #2d2d2d, #202020);  /* More subtle gradient */
-  background-size: 200% 200%;
+  background-color: #000000d9;
   animation: Gradient 20s ease infinite;
   min-height: 100vh;
   color: #E1E1E1;
@@ -93,8 +92,16 @@ body {
 /* Styling for each list item */
 #nav-bar ul li {
   padding: 10px;
-  font-size: 20px;  /* Slightly larger text size */
+  font-size: 20px; /* Slightly larger text size */
 }
+
+/* Style the last list item (emoji) */
+#nav-bar ul li:nth-last-child(1) {
+  font-size: 30px; /* Larger font size for the last list item (emoji) */
+  transform: scale(2.0); /* Scale the emoji without affecting the layout */
+  display: inline-block; /* Ensure it doesn't affect the line height */
+}
+
 
 
 /* Styling for the links */
@@ -109,3 +116,111 @@ body {
   color: #00bcd4;
 }
 
+/**
+--------------------- ALL PAGES GENERAL STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+#home-div, #activity-div, #note-div, #notes-list-div, #buy-me-a-coffee-div, #about-div{
+  background: linear-gradient(135deg, #2C3E50, #4CA1AF);  /* Background Gradient */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Horizontally center children */
+  justify-content: center; /* Vertically center children */
+  min-height: 100vh;
+  width: 100vw;
+}
+
+/**
+--------------------- HOME PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
+/* Main Heading */
+#home-div h1 {
+  font-size: 4rem;
+  color: #ECF0F1;
+  text-shadow: 2px 2px 4px #000;
+  margin-bottom: 10px;
+}
+
+#intro-video {
+  display: flex;
+  align-items: center;  /* Horizontally center children */
+  flex-direction: column;
+}
+
+#intro-video video {
+  width: 80vw;
+  height: auto;
+  border: 1px solid whitesmoke;
+  border-radius: 25px;
+}
+
+/* Subheading */
+#home-div h2 {
+  font-size: 2rem;
+  color: #ECF0F1;
+  text-shadow: 1px 1px 2px #000;
+}
+
+/* Call to Action Button */
+#home-div button {
+  margin-top: 30px;
+  padding: 10px 30px;
+  font-size: 1.5rem;
+  border: 1px solid whitesmoke;
+  border-radius: 15px;
+  background-color: #ECF0F1;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+}
+
+#home-div button:hover {
+  background-color: #333;
+  color: #ECF0F1;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-7px);
+}
+
+/* Additional Info Text */
+#home-div p {
+  color: #ECF0F1;
+  font-size: 18px;
+  margin-top: 15px;
+  max-width: 75%;
+}
+
+#home-bottom-div {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+#journey-start, #features, #interactive-demo{
+  margin-left: 10%;
+}
+
+
+/**
+--------------------- ABOUT PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
+
+/**
+--------------------- NOTE PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
+
+/**
+--------------------- NOTESLIST PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
+
+/**
+--------------------- BUYMEACOFFEE PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
+
+/**
+--------------------- ACTIVITY PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/

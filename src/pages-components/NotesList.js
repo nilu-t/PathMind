@@ -1,7 +1,7 @@
 
 const NotesList = () => {
     return(
-        <div id="notesList-div">
+        <div id="notes-list-div">
             <h1> Notes List Page</h1>
         </div>
     )

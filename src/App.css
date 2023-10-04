@@ -1,4 +1,106 @@
-.App {
+/* Main App styling */
+body {
+  background: linear-gradient(120deg, #202020, #2d2d2d, #202020);  /* More subtle gradient */
+  background-size: 200% 200%;
+  animation: Gradient 20s ease infinite;
+  min-height: 100vh;
+  color: #E1E1E1;
+}
+
+/* Gradient animation */
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Styling the title "Path Mind" */
+.app-title {
+  margin: 0;
+  padding: 0;
   text-align: center;
+  font-size: 70px; /* Increased font size */
+  font-weight: 900; /* Bolder font */
+  text-transform: uppercase;
+  margin-top: 50px; /* Increased margin */
+  margin-bottom: 50px; /* Increased margin */
+  color: #00bcd4;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for more depth */
+}
+
+/* Animation for the title on page load */
+@keyframes titleAnimation {
+  0% {
+    transform: rotateY(0deg); /* Initial state */
+    color: #00bcd4; /* Initial color */
+  }
+  25% {
+    transform: rotateY(360deg); /* Rotate at 25% of the animation */
+    color: #ff4081; /* Change color at 25% of the animation */
+  }
+  75% {
+    transform: rotateY(360deg); /* Rotate at 75% of the animation */
+    color: #ff4081; /* Change color at 75% of the animation */
+  }
+  100% {
+    transform: rotateY(0deg); /* Final state */
+    color: #00bcd4; /* Final color (blue) */
+  }
+}
+
+/* Apply the animation only on page load */
+.app-title {
+  animation: titleAnimation 5s linear forwards; /* Apply animation with a 5s duration */
+}
+
+/* Add background and padding to the navigation bar */
+#nav-bar {
+  background: linear-gradient(to right, #333, #55555572, #333);  /* Gradient Background */
+  padding: 15px 0;  /* Bigger vertical padding for a grand look */
+  border-radius: 15px;  /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Box shadow for depth */
+  width: 80%;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;  /* Transition for hover effect */
+  margin: 0 auto;
+}
+
+/* Hover effect for the navigation bar */
+#nav-bar:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);  /* Bigger box shadow on hover */
+  transform: scale(1.02);  /* Slightly scale the nav bar on hover */
+}
+
+
+/* Flex layout for the list items */
+#nav-bar ul {
+  display: flex;
+  list-style: none;
+  justify-content: space-around; /* evenly distributing the list items */
+  margin: 0;
+  padding: 0;
+}
+
+/* Styling for each list item */
+#nav-bar ul li {
+  padding: 10px;
+  font-size: 20px;  /* Slightly larger text size */
+}
+
+/* Styling for the links */
+#nav-bar ul li a {
+  color: #F1F1F1;  /* Light gray text to match with App background */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* Hover effect for the links */
+#nav-bar ul li a:hover {
+  color: #00bcd4;
 }
 

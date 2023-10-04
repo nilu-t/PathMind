@@ -10,7 +10,7 @@ const Home = () => {
             <section id="intro-video">
                 <h2>What is Path Mind?</h2>
                 <video src="intro.mp4" controls></video>
-                <p>Watch the video to find out how PathMind can supercharge your learning!</p>
+                <p>Watch the video to find out how Path Mind can supercharge your learning!</p>
             </section>
             
             <div id="home-bottom-div">
@@ -39,7 +39,7 @@ const Home = () => {
                 </section>
 
                 <section id="interactive-demo">
-                    <h2>Try the Demo</h2>
+                    <h2>Try out the Demo</h2>
                     <p>Click below to experience a live demo of creating your first learning path.</p>
 
                     <Link to="/demo">

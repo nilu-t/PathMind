@@ -119,7 +119,7 @@ body {
 /**
 --------------------- ALL PAGES GENERAL STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
-#home-div, #activity-div, #note-div, #notes-list-div, #buy-me-a-coffee-div, #about-div{
+#home-div, #activity-div, #note-div, #notes-list-div, #buy-me-a-coffee-div, #about-div, #not-found-page-div{
   background: linear-gradient(135deg, #2C3E50, #4CA1AF);  /* Background Gradient */
   display: flex;
   flex-direction: column;
@@ -224,3 +224,30 @@ body {
 /**
 --------------------- ACTIVITY PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
+
+
+/**
+--------------------- MYPATH PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+#my-path-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#my-path-div .path-card{
+  height: 25vh;
+  width: 80vw;
+  background-color: rgba(240, 248, 255, 0.05);
+  margin-top: 20px;
+  border: 1px solid whitesmoke;
+  border-radius: 25px;
+}
+
+#my-path-div:nth-last-child(1){
+  margin-bottom: 20px; /* Last card at the bottom of the page has spacing at the bottom too*/
+}
+
+#my-path-div h1{
+  text-align: center;
+}

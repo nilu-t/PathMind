@@ -1,0 +1,92 @@
+{
+    "learningPaths": [
+      {
+        "title": "Front-End Development",
+        "subjects": [
+            "HTML", 
+            "CSS", 
+            "JavaScript", 
+            "React", 
+            "Vue"
+        ]
+      },
+      {
+        "title": "Back-End Development",
+        "subjects": [
+            "Node.js", 
+            "Ruby on Rails", 
+            "Django"
+        ]
+      },
+      {
+        "title": "Full-Stack Development",
+        "subjects": [
+            "HTML", 
+            "CSS", 
+            "JavaScript", 
+            "Node.js", 
+            "MongoDB"
+        ]
+      },
+      {
+        "title": "Machine Learning",
+        "subjects": [
+            "Python", 
+            "TensorFlow", 
+            "Scikit-Learn"
+        ]
+      },
+      {
+        "title": "Artificial Intelligence",
+        "subjects": [
+            "Python", 
+            "Neural Networks", 
+            "NLP"
+        ]
+      },
+      {
+        "title": "Cybersecurity",
+        "subjects": [
+            "Cryptography", 
+            "Network Security", 
+            "Ethical Hacking"
+        ]
+      },
+      {
+        "title": "Game Development",
+        "subjects": [
+            "Unity", 
+            "C#", 
+            "3D Modeling"
+        ]
+      },
+      {
+        "title": "Cloud Computing",
+        "subjects": [
+            "AWS", 
+            "Azure", 
+            "Google Cloud"
+        ]
+      },
+      {
+        "title": "Data Science",
+        "subjects": [
+            "Python", 
+            "R", 
+            "Data Visualization"
+        ]
+      },
+      {
+        "title": "Popular Programming Languages",
+        "subjects": [
+            "Python", 
+            "JavaScript", 
+            "Java", 
+            "C++", 
+            "C#", 
+            "Go", 
+            "Ruby"
+        ]
+      }
+    ]
+}

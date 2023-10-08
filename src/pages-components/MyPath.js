@@ -27,7 +27,7 @@ const MyPath = () => {
 
                     let subjectRoute = `/NotesList/${subject}`
 
-                    if(subject == "C#"){
+                    if(subject === "C#"){
                         //special case when the subject is c#.
                         subjectRoute = `/NotesList/C Sharp`
                     }

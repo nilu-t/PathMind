@@ -117,14 +117,13 @@ body {
 }
 
 /**
---------------------- ALL PAGES GENERAL STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------- ALL PAGES GENERAL STYLING (AT THE TOP ABOVE ALL OTHER PAGES STYLED) ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 #home-div, #activity-div, #note-div, #notes-list-div, #buy-me-a-coffee-div, #about-div, #not-found-page-div, #my-path-div{
   background: linear-gradient(135deg, #2C3E50, #4CA1AF);  /* Background Gradient */
   display: flex;
   flex-direction: column;
   align-items: center; /* Horizontally center children */
-  justify-content: center; /* Vertically center children */
   min-height: 100vh;
   width: 100vw;
 }
@@ -148,20 +147,18 @@ body {
 }
 
 #intro-video video {
-  width: 80vw;
+  width: 60vw;
   height: auto;
   border: 1px solid whitesmoke;
   border-radius: 25px;
 }
 
-/* Subheading */
 #home-div h2 {
   font-size: 2rem;
   color: #ECF0F1;
   text-shadow: 1px 1px 2px #000;
 }
 
-/* Call to Action Button */
 #home-div button {
   margin-top: 30px;
   padding: 10px 30px;
@@ -182,7 +179,6 @@ body {
   transform: translateY(-7px);
 }
 
-/* Additional Info Text */
 #home-div p {
   color: #ECF0F1;
   font-size: 18px;
@@ -214,6 +210,110 @@ body {
 /**
 --------------------- NOTESLIST PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
+
+#notes-list-div #title{
+  font-size: 60px; /*  large font size */
+  font-weight: 500; /* Bolder font */
+  text-transform:capitalize;
+}
+
+#notes-list-div #files-accepted {
+  text-align: center;
+ }
+
+#notes-list-div #left-and-right-part-div{
+  display: flex;
+  width: 50vw;
+}
+
+#notes-list-div #left-container{
+  flex:1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#notes-list-div #left-container button{
+  font-size: 30px; /*  large font size */
+  text-align: center;
+  background-color: transparent;
+  border: 1px solid whitesmoke;
+  color:white;
+  border-radius: 15px;
+  margin-top: 25px;
+}
+
+#notes-list-div #left-container button:hover{
+  cursor: pointer;
+}
+
+
+#notes-list-div #left-part-div{
+  text-align: center;
+  height: 25vh;
+  width: auto;
+  margin-right: 5%;
+  background-color: #2c3e5058;
+  border-radius: 25px;
+  padding: 10px;
+
+}
+
+#notes-list-div #left-part-div input {
+  background-color: #003045;
+  color: white;
+  padding: 12px 24px; /* Some padding */
+  font-size: 16px;
+  cursor: pointer; 
+  border-radius: 12px; 
+  transition: all 0.3s; /* Transitional effect */
+}
+
+#notes-list-div #left-part-div input:hover {
+  background-color: #01131be3; /* Darker green on mouse-over */
+}
+
+#notes-list-div #right-part-div{
+
+  flex: 2;
+  text-align: center;
+  height: 70vh;
+  width: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* vertical centering */
+}
+
+#notes-list-div #right-part-div #code-snippet-div{
+  width: 80%;
+  height: 80%;
+  background-color: #2c3e5058;
+  border-radius: 25px;
+}
+
+#notes-list-div #right-part-div textarea {
+  width: 80%;
+  height: 80%;
+  background-color: transparent;
+  resize: none; 
+  border-radius: 10px; 
+  font-size: 16px;
+  border: none;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2); /* increased blur and opacity */
+
+}
+
+#notes-list-div #right-part-div textarea:focus {
+  outline: none; /* removes default outline */
+}
+
+#notes-list-div #right-part-div textarea::placeholder {
+  color: #ffffff60; /* placeholder text color */
+  font-size: 20px; /* placeholder text size */
+  text-align: center;
+}
 
 
 /**

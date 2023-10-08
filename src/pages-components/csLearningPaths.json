@@ -2,91 +2,54 @@
     "learningPaths": [
       {
         "title": "Front-End Development",
-        "subjects": [
-            "HTML", 
-            "CSS", 
-            "JavaScript", 
-            "React", 
-            "Vue"
-        ]
+        "description": "Learn how to build the user interface and experience.",
+        "subjects": ["HTML", "CSS", "JavaScript", "React", "Vue"]
       },
       {
         "title": "Back-End Development",
-        "subjects": [
-            "Node.js", 
-            "Ruby on Rails", 
-            "Django"
-        ]
+        "description": "Focuses on server-side logic and databases.",
+        "subjects": ["Node.js", "Ruby on Rails", "Django"]
       },
       {
         "title": "Full-Stack Development",
-        "subjects": [
-            "HTML", 
-            "CSS", 
-            "JavaScript", 
-            "Node.js", 
-            "MongoDB"
-        ]
+        "description": "Covers both front-end and back-end development.",
+        "subjects": ["HTML", "CSS", "JavaScript", "Node.js", "MongoDB"]
       },
       {
         "title": "Machine Learning",
-        "subjects": [
-            "Python", 
-            "TensorFlow", 
-            "Scikit-Learn"
-        ]
+        "description": "Introduction to algorithms and data models.",
+        "subjects": ["Python", "TensorFlow", "Scikit-Learn"]
       },
       {
         "title": "Artificial Intelligence",
-        "subjects": [
-            "Python", 
-            "Neural Networks", 
-            "NLP"
-        ]
+        "description": "Study of intelligent agent behavior.",
+        "subjects": ["Python", "Neural Networks", "NLP"]
       },
       {
         "title": "Cybersecurity",
-        "subjects": [
-            "Cryptography", 
-            "Network Security", 
-            "Ethical Hacking"
-        ]
+        "description": "Learn to protect systems from digital attacks.",
+        "subjects": ["Cryptography", "Network Security", "Ethical Hacking"]
       },
       {
         "title": "Game Development",
-        "subjects": [
-            "Unity", 
-            "C#", 
-            "3D Modeling"
-        ]
+        "description": "Learn to create video games for various platforms.",
+        "subjects": ["Unity", "C#", "3D Modeling"]
       },
       {
         "title": "Cloud Computing",
-        "subjects": [
-            "AWS", 
-            "Azure", 
-            "Google Cloud"
-        ]
+        "description": "Introduction to cloud-based services and storage solutions.",
+        "subjects": ["AWS", "Azure", "Google Cloud"]
       },
       {
         "title": "Data Science",
-        "subjects": [
-            "Python", 
-            "R", 
-            "Data Visualization"
-        ]
+        "description": "Analyzing and interpreting complex data.",
+        "subjects": ["Python", "R", "Data Visualization"]
       },
       {
         "title": "Popular Programming Languages",
-        "subjects": [
-            "Python", 
-            "JavaScript", 
-            "Java", 
-            "C++", 
-            "C#", 
-            "Go", 
-            "Ruby"
-        ]
+        "description": "Overview of the most commonly used programming languages.",
+        "subjects": ["Python", "JavaScript", "Java", "C++", "C#", "Go", "Ruby"]
       }
     ]
 }
+  

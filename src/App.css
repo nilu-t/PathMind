@@ -234,7 +234,6 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;  /* This ensures the cards inside stack in rows*/
-  border: 1px solid white;
 }
 
 #my-path-div .path-card{
@@ -242,8 +241,7 @@ body {
   width: calc(33.3333% - 40px); 
   background-color: rgba(240, 248, 255, 0.05);
   margin: 10px;
-  border: 1px solid whitesmoke;
-  border-radius: 25px;
+  border-radius: 30px;
 }
 
 #my-path-div .path-card #path-desc{
@@ -262,13 +260,17 @@ body {
   width: auto;
   height: 100px;
   margin-left: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #path-images img:hover{
   box-shadow: 10px 15px 20px rgba(0, 0, 0, 0.2);
-  border: 5px solid rgba(34, 33, 89, 0.439);
+  border: 3px solid rgba(34, 33, 89, 0.439);
   border-radius: 15px;
-  
+  transform: scale(1.1);
 }
 
 
@@ -278,7 +280,6 @@ body {
   box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2);
   border: 1px solid whitesmoke;
   transform:translateY(-5px);
-  cursor: pointer;
 }
 
 #my-path-div h1{

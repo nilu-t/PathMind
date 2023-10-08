@@ -1,5 +1,6 @@
 import csLearningPaths from './csLearningPaths.json';
-import React, { useState } from 'react';
+
+import { Link } from 'react-router-dom'
 
 const MyPath = () => {
 
@@ -24,7 +25,18 @@ const MyPath = () => {
                 const images = subjectsArr.map((subject) =>{
                     const imagePath = `learning-path-images/computer-science/${convertToImageNamePNG(subject)}`; //from the public folder so the path can be accessed from there. 
 
-                    return <img src={imagePath} alt={imagePath} draggable={false}/>
+                    let subjectRoute = `/NotesList/${subject}`
+
+                    if(subject == "C#"){
+                        //special case when the subject is c#.
+                        subjectRoute = `/NotesList/C Sharp`
+                    }
+
+                    return (
+                        <Link to= { subjectRoute }>
+                            <img src={imagePath} alt={imagePath} draggable={false}/>
+                        </Link>
+                    );
                 })
 
                 return(

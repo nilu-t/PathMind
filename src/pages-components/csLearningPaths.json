@@ -1,6 +1,11 @@
 {
     "learningPaths": [
       {
+        "title": "Popular Programming Languages",
+        "description": "Overview of the most commonly used programming languages.",
+        "subjects": ["Python", "JavaScript", "Java", "C++", "C#", "Go", "Ruby"]
+      },
+      {
         "title": "Front-End Development",
         "description": "Learn how to build the user interface and experience.",
         "subjects": ["HTML", "CSS", "JavaScript", "React", "Vue"]
@@ -44,11 +49,6 @@
         "title": "Data Science",
         "description": "Analyzing and interpreting complex data.",
         "subjects": ["Python", "R", "Data Visualization"]
-      },
-      {
-        "title": "Popular Programming Languages",
-        "description": "Overview of the most commonly used programming languages.",
-        "subjects": ["Python", "JavaScript", "Java", "C++", "C#", "Go", "Ruby"]
       }
     ]
 }

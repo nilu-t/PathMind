@@ -24,7 +24,7 @@ const MyPath = () => {
                 const images = subjectsArr.map((subject) =>{
                     const imagePath = `learning-path-images/computer-science/${convertToImageNamePNG(subject)}`; //from the public folder so the path can be accessed from there. 
 
-                    return <img src={imagePath} alt={imagePath}/>
+                    return <img src={imagePath} alt={imagePath} draggable={false}/>
                 })
 
                 return(

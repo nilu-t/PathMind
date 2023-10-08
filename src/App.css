@@ -234,14 +234,14 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;  /* This ensures the cards inside stack in rows*/
-  align-items: center;
+  border: 1px solid white;
 }
 
 #my-path-div .path-card{
   height: 25vh;
-  width: calc(33.3333% - 30px); /* Updated this line */
+  width: calc(33.3333% - 40px); 
   background-color: rgba(240, 248, 255, 0.05);
-  margin: 10px;  /* Updated this line */
+  margin: 10px;
   border: 1px solid whitesmoke;
   border-radius: 25px;
 }
@@ -255,13 +255,22 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 #path-images img {
   width: auto;
   height: 100px;
-  margin-left: 10px;
+  margin-left: 15px;
 }
+
+#path-images img:hover{
+  box-shadow: 10px 15px 20px rgba(0, 0, 0, 0.2);
+  border: 5px solid rgba(34, 33, 89, 0.439);
+  border-radius: 15px;
+  
+}
+
 
 #my-path-div .path-card:hover{
   background-color: rgba(240, 248, 255, 0);

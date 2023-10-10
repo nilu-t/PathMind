@@ -10,13 +10,6 @@ const MyPath = () => {
         return `${subject.toLowerCase().replaceAll("+","plus").replace("#","-sharp").replace(".","").replaceAll(" ", "-")}-logo.png`
     }
 
-    const handleFileUpload = (title, event) => {
-        const file = event.target.files[0];
-        console.log(`File uploaded for ${title}: ${file.name}`);
-        //handling the uploaded file. i.e, extract the text and upload the note to the database. 
-
-    };
-
     return(
         <div id="my-path-div">
             { myLearningPaths.map( (pathObj, index) => {

@@ -211,6 +211,28 @@ body {
 --------------------- NOTESLIST PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 
+#notes-list-div #full-page-div{
+  display: flex;
+  width: 90vw;
+  height: auto;
+}
+
+#notes-list-div #view-notes-div{
+
+  flex:1;
+  text-align: center;
+  margin-right: 5%;
+  height: auto;
+  border: 1px solid white;
+}
+#notes-list-div #favourite-notes-div{
+
+  flex:1;
+  text-align: center;
+  height: auto;
+  border: 1px solid white;
+}
+
 #notes-list-div #title{
   font-size: 60px; /*  large font size */
   font-weight: 500; /* Bolder font */
@@ -222,6 +244,7 @@ body {
  }
 
 #notes-list-div #left-and-right-part-div{
+  flex:5;
   display: flex;
   width: 50vw;
 }

@@ -206,137 +206,146 @@ body {
 --------------------- NOTE PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 
-
 /**
 --------------------- NOTESLIST PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 
-#notes-list-div #full-page-div{
+#notes-list-div #full-page-div {
   display: flex;
   width: 90vw;
-  height: auto;
+  height: 80vh;
 }
 
-#notes-list-div #view-notes-div{
-
-  flex:1;
+#notes-list-div #view-notes-div,
+#notes-list-div #favourite-notes-div {
+  flex: 1;
   text-align: center;
   margin-right: 5%;
-  height: auto;
-  border: 1px solid white;
-}
-#notes-list-div #favourite-notes-div{
-
-  flex:1;
-  text-align: center;
-  height: auto;
-  border: 1px solid white;
+  background-color: #2c3e5058;
+  border-radius: 10px;
 }
 
-#notes-list-div #title{
-  font-size: 60px; /*  large font size */
-  font-weight: 500; /* Bolder font */
-  text-transform:capitalize;
+#notes-list-div #title {
+  font-size: 60px;
+  font-weight: 500;
+  text-transform: capitalize;
 }
 
 #notes-list-div #files-accepted {
   text-align: center;
- }
-
-#notes-list-div #left-and-right-part-div{
-  flex:5;
-  display: flex;
-  width: 50vw;
 }
 
-#notes-list-div #left-container{
-  flex:1;
+#notes-list-div #entire-note-upload-div {
+  flex: 5;
+  display: flex;
+}
 
+#notes-list-div #left-container {
+  flex: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 #notes-list-div #left-container button{
-  font-size: 30px; /*  large font size */
-  text-align: center;
-  background-color: transparent;
+  margin-top: 30px;
+  padding: 10px 30px;
+  font-size: 1.5rem;
   border: 1px solid whitesmoke;
-  color:white;
   border-radius: 15px;
-  margin-top: 25px;
-}
-
-#notes-list-div #left-container button:hover{
+  background-color: #ECF0F1;
+  color: #333;
   cursor: pointer;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
 }
 
+#notes-list-div #left-container button:hover {
+  background-color: #333;
+  color: #ECF0F1;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-7px);
+}
 
-#notes-list-div #left-part-div{
+#notes-list-div #left-part-div {
   text-align: center;
-  height: 25vh;
-  width: auto;
+  height: 90%;
+  width: 90%;
   margin-right: 5%;
   background-color: #2c3e5058;
   border-radius: 25px;
   padding: 10px;
-
 }
 
 #notes-list-div #left-part-div input {
   background-color: #003045;
   color: white;
-  padding: 12px 24px; /* Some padding */
+  padding: 12px 24px;
   font-size: 16px;
-  cursor: pointer; 
-  border-radius: 12px; 
-  transition: all 0.3s; /* Transitional effect */
+  cursor: pointer;
+  border-radius: 12px;
 }
 
-#notes-list-div #left-part-div input:hover {
-  background-color: #01131be3; /* Darker green on mouse-over */
-}
-
-#notes-list-div #right-part-div{
-
+#notes-list-div #right-part-div {
   flex: 2;
   text-align: center;
-  height: 70vh;
-  width: auto;
-
+  height: 80%;
   display: flex;
   flex-direction: column;
-  align-items: center; /* vertical centering */
+  align-items: center;
 }
 
-#notes-list-div #right-part-div #code-snippet-div{
+#notes-list-div #right-part-div #code-snippet-div {
   width: 80%;
   height: 80%;
   background-color: #2c3e5058;
   border-radius: 25px;
 }
 
-#notes-list-div #right-part-div textarea {
+#notes-list-div #right-part-div textarea,
+#paste-note-div #note-text {
   width: 80%;
   height: 80%;
   background-color: transparent;
-  resize: none; 
-  border-radius: 10px; 
-  font-size: 16px;
+  resize: none;
   border: none;
-  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2); /* increased blur and opacity */
-
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  font-size: 16px;
 }
 
-#notes-list-div #right-part-div textarea:focus {
-  outline: none; /* removes default outline */
+#paste-note-div #note-title{
+  background-color: transparent;
+  border: none;
+  margin-bottom: 10px;
+  resize: none;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 16px;
+  width: 80%;
+  height: auto;
 }
 
-#notes-list-div #right-part-div textarea::placeholder {
-  color: #ffffff60; /* placeholder text color */
-  font-size: 20px; /* placeholder text size */
+#paste-note-div #note-title::placeholder{
+  text-align: left;
+}
+
+#notes-list-div #right-part-div textarea:focus,
+#paste-note-div textarea:focus {
+  outline: none;
+}
+
+#notes-list-div #right-part-div textarea::placeholder,
+#paste-note-div textarea::placeholder {
+  color: #ffffff60;
+  font-size: 20px;
   text-align: center;
 }
+
+#paste-note-div {
+  height: 80%;
+}
+
 
 
 /**

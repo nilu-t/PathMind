@@ -15,7 +15,7 @@ const MyPath = () => {
             { myLearningPaths.map( (pathObj, index) => {
                 const subjectsArr = pathObj.subjects;
 
-                const images = subjectsArr.map((subject) =>{
+                const images = subjectsArr.map((subject, i) =>{
                     const imagePath = `learning-path-images/computer-science/${convertToImageNamePNG(subject)}`; //from the public folder so the path can be accessed from there. 
 
                     let subjectRoute = `/NotesList/${subject}`
@@ -26,7 +26,7 @@ const MyPath = () => {
                     }
 
                     return (
-                        <Link to= { subjectRoute }>
+                        <Link to= { subjectRoute } key={i}>
                             <img src={imagePath} alt={imagePath} draggable={false}/>
                         </Link>
                     );

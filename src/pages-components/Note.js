@@ -1,8 +1,15 @@
+import { useParams } from "react-router-dom";
 
 const Note = () => {
+    const myParams = useParams();
+
     return(
         <div id="note-div">
-            <h1> Note Page for: </h1>
+            <h1> Note on "{myParams.note_title}" </h1>
+
+            <div id="note-content-div">
+                
+            </div>
         </div>
     )
 }

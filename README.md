@@ -10,4 +10,4 @@ Technologies Used: <br>
 Frontend: React. <br>
 Backend: Node.js (Express.js framework). <br>
 Database: MySQL. <br>
-User Authentication: TDB: (JWT (JSON Web Tokens) or Passport.js). <br>
+User Authentication: Firebase user authentication. <br>

@@ -1,8 +1,13 @@
 -- CREATE DATABASE pathmind;
--- use pathmind;
+use pathmind;
 
-DROP TABLE notes;
-DROP TABLE learning_paths;
+-- DROP TABLE notes;
+-- DROP TABLE learning_paths;
+
+-- CREATE TABLE users(
+-- 	id INT AUTO_INCREMENT PRIMARY KEY,
+--     email VARCHAR(255) NOT NULL
+-- );
 
 CREATE TABLE notes(
 	id INT AUTO_INCREMENT PRIMARY KEY,

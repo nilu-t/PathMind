@@ -209,9 +209,12 @@ body {
 --------------------- SIGN UP PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 
-#sign-up-form {
-  font-size: 32px;
-  padding: 40px;
+#sign-up-form h1{
+  font-size: 4rem;
+  color: #ECF0F1;
+  text-shadow: 2px 2px 4px #000;
+  margin-bottom: 20px;
+  letter-spacing: 1px; /* Spaced out characters */
 }
 
 #sign-up-form input {
@@ -259,6 +262,49 @@ body {
 /**
 --------------------- ABOUT PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
+
+#about-div {
+  align-items: center;
+  padding: 50px 0;
+}
+
+#about-div div {
+  width: 45vw;
+  margin: 10px;
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.028); /* Slight dark background for contrast */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); /* Box shadow for depth */
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+#about-div div h2{
+  text-align: center;
+  text-decoration: underline;
+
+}
+
+#about-div div:hover {
+  transform: scale(1.05); /* Slight scale on hover */
+}
+
+#about-div h1 {
+  font-size: 4rem;
+  color: #ECF0F1;
+  text-shadow: 2px 2px 4px #000;
+  margin-bottom: 20px;
+  letter-spacing: 1px; /* Spaced out characters */
+}
+
+#about-div p,  #about-div ul{
+  color: #ECF0F1;
+  font-size: 1.2rem;
+  margin: 20px;
+  line-height: 1.6;
+  letter-spacing: 0.5px; /* Spaced out characters */
+  list-style: none;
+}
+
+
 
 
 /**

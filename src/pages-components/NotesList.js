@@ -48,6 +48,8 @@ const NotesList = () => {
         axios.get(route_name)
         .then(response =>{
             console.log(`response from get request is ${JSON.stringify(response.data, null, 2)}`)
+
+            
             setMyNotes(response.data) //myNotes array will store a list of objects. 
         })
         .catch(error =>{

@@ -18,6 +18,7 @@ const NotesList = () => {
     const [noteContent, setNoteContent] = useState('')
     const [noteTitle, setNoteTitle] = useState('')
     const [isEmpty, setIsEmpty] = useState(false)
+    const [isEmptyTitle, setIsEmptyTitle] = useState('')
     const [numSubmitted, setNumSubmitted] = useState(0)
     const [myNotes, setMyNotes] = useState([])
 
@@ -34,10 +35,10 @@ const NotesList = () => {
     const sendPostRequest = (route_name) =>{
 
         axios.post(route_name)
-        .then(response =>{
+        .then( (response) =>{
             console.log(`response from post request is ${JSON.stringify(response.data, null, 2)}`)
         })
-        .catch(error =>{
+        .catch( (error) =>{
             console.log(`error is ${error}`)
         })
     }
@@ -47,7 +48,7 @@ const NotesList = () => {
         axios.get(route_name)
         .then(response =>{
             console.log(`response from get request is ${JSON.stringify(response.data, null, 2)}`)
-            setMyNotes(response.data)
+            setMyNotes(response.data) //myNotes array will store a list of objects. 
         })
         .catch(error =>{
             console.log(`error is ${error}`)
@@ -56,9 +57,14 @@ const NotesList = () => {
 
     const handleSubmitButtonClick = () =>{
 
-        incrementNumSubmitted()
+        incrementNumSubmitted() //increment the number of times submit button is clicked.
+
         if((noteContent.trim() === '')){
             setIsEmpty(true);
+            return;
+        }
+        else if(noteTitle.trim() === ''){
+            setIsEmptyTitle(true);
             return;
         }
         else{
@@ -139,8 +145,8 @@ const NotesList = () => {
                     {viewNotes}
                     {myNotes.length === 0 && 
                     <>
-                    <p>Time to make some notes! 📝</p> 
-                    <img></img>
+                    <p>Time to make some notes!</p> 
+                    <img src="/other-images/empty-note.png" draggable={false}></img>
                     </>} {/** Conditional rendering when there are no notes at all. */}
                 </div>
 

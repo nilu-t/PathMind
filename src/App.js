@@ -9,6 +9,7 @@ import BuyMeACoffee from './pages-components/BuyMeACoffee';
 import NotFoundPage from './pages-components/NotFoundPage';
 import NavBar from './NavBar.js'
 import MyPath from './pages-components/MyPath';
+import SignUp from './pages-components/SignUp';
 
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/Activity' element= {<Activity/>} />
           <Route path='/BuyMeACoffee' element= {<BuyMeACoffee/>} />
           <Route path='/MyPath' element= {<MyPath/>} />
+          <Route path='/SignUp' element={<SignUp/>}/>
           <Route path='*' element = {<NotFoundPage/>} /> 
         </Routes>
       </BrowserRouter>

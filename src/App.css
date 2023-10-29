@@ -504,11 +504,80 @@ body {
 /**
 --------------------- BUYMEACOFFEE PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
+#about-me-div{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  line-height: 2;
+}
+
 #buy-me-a-coffee-div #about-me-div{
   width: 50vw;
   height:auto;
   font-size: 25px;
 }
+
+#about-me-div img{
+  width: 500px;
+  height: auto;
+  border-radius: 50px;
+  margin-left: 15px;
+  border: 3px solid whitesmoke;
+}
+
+#lets-connect-div{
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  width: 50vw;
+  height: auto;
+
+  justify-content: space-around;
+
+}
+
+#lets-connect-div a{
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+#about-me-div a{
+  border-radius: 25px;
+  padding: 5px 15px; /* increased horizontal padding for better aesthetics */
+  text-decoration: none;
+  color: whitesmoke;
+  border: 1px solid whitesmoke;
+  transition: all 0.3s ease; /* smooth transition for all changes */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+
+  /* On hover: */
+  background-color: whitesmoke; 
+  color: #333; /* dark text on light background for contrast */
+}
+
+#about-me-div a:hover{
+  background-color: #333; 
+  color: whitesmoke; /* return to original on hover */
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2); /* deeper shadow on hover */
+}
+
+
+#lets-connect-div img{
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+   /* smooth transition for scale and shadow */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+
+  width: 150px;
+  height: auto;
+  border-radius: 10px;
+}
+
+#lets-connect-div img:hover{
+  cursor: pointer;
+  transform: scale(1.05); /* slightly larger on hover for a "zoom" effect */
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2); /* deeper shadow on hover */
+}
+
 
 /**
 --------------------- ACTIVITY PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

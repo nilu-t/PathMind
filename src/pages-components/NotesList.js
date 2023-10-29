@@ -16,6 +16,7 @@ const NotesList = () => {
     const myParams = useParams()
 
     const [noteContent, setNoteContent] = useState('')
+    const [codeContent, setCodeContent] = useState('')
     const [noteTitle, setNoteTitle] = useState('')
     const [isEmpty, setIsEmpty] = useState(false)
     const [isEmptyTitle, setIsEmptyTitle] = useState('')
@@ -25,6 +26,7 @@ const NotesList = () => {
     useEffect(() => {
         // This function will run when the component mounts
         sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}`);
+
     }, [myParams.subject]); // The effect will re-run if myParams.subject changes
 
 
@@ -72,22 +74,41 @@ const NotesList = () => {
         else{
             setIsEmpty(false);
             setNumSubmitted(0)
-            sendPostRequest(`http://localhost:8000/add_note/${myParams.subject}/${noteTitle}/${noteContent}`)
+            sendPostRequest(`http://localhost:8000/add_note/${myParams.subject}/${noteTitle}/${noteContent}/${codeContent}`)
             sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}`)
         }
         // alert(`Text area contains ${text}`)
     }
 
-    const viewNotes = myNotes.map((noteObj) => {
 
-        return (
+    let seenTitles = {};
 
-            <Link to= {`/Note/${noteObj.note_title}/${noteObj.id}`} key={noteObj.id}>
-                <p>{noteObj.note_title}</p>
-            </Link>
-        );
-    });
+    for (let i = 0; i < myNotes.length; i++) {
+        let noteObj = myNotes[i];
+        if (noteObj.note_title) {
+            if (seenTitles[noteObj.note_title]) {
+                myNotes.splice(i, 1);
+                i--; // Decrement index to adjust for the removed element or next element will be skipped.
+            } else {
+                seenTitles[noteObj.note_title] = true;
+            }
+        }
+    }
     
+    console.log(myNotes);
+
+    const viewNotes = myNotes.map((noteObj) => {
+        
+        // Check if the note title exists in the dictionary and its value is 1
+        return (
+        <Link to={`/Note/${noteObj.note_title}/${noteObj.id}`} key={noteObj.id}>
+            <p>{noteObj.note_title}</p>
+        </Link>
+        );
+    
+      });
+      
+        
     return(
         
         <div id="notes-list-div">
@@ -136,7 +157,14 @@ const NotesList = () => {
                         
                         <div id="code-snippet-div">
                             <h1>Code Snippet (Optional)</h1>
-                            <textarea placeholder="Got code? Place it here before submitting."></textarea>
+                            <textarea 
+                            placeholder="Got code? Place it here before submitting."
+                            value= {codeContent}
+                            onChange = {(e)=>{
+                                setCodeContent(e.target.value)
+                            }}
+                            
+                            ></textarea>
                         </div>
 
                     </div>

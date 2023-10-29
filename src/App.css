@@ -60,13 +60,18 @@ body {
   animation: titleAnimation 5s linear forwards; /* Apply animation with a 5s duration */
 }
 
+
+/**
+--------------------- NAVIGATION BAR SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
 /* Add background and padding to the navigation bar */
 #nav-bar {
   background: linear-gradient(to right, #333, #55555572, #333);  /* Gradient Background */
   padding: 15px 0;  /* Bigger vertical padding for a grand look */
   border-radius: 15px;  /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Box shadow for depth */
-  width: 80%;
+  width: 65%;
   transition: box-shadow 0.3s ease, transform 0.3s ease;  /* Transition for hover effect */
   margin: 0 auto;
   border: 1px solid whitesmoke; /* Add a white border */
@@ -84,6 +89,7 @@ body {
 #nav-bar ul {
   display: flex;
   list-style: none;
+  flex-direction: row;
   justify-content: space-around; /* evenly distributing the list items */
   margin: 0;
   padding: 0;
@@ -101,7 +107,6 @@ body {
   transform: scale(2.0); /* Scale the emoji without affecting the layout */
   display: inline-block; /* Ensure it doesn't affect the line height */
 }
-
 
 
 /* Styling for the links */
@@ -127,7 +132,8 @@ body {
 #about-div, 
 #not-found-page-div, 
 #my-path-div, 
-#sign-up-form{
+#sign-up-form,
+#community-div{
   background: linear-gradient(135deg, #2C3E50, #4CA1AF);  /* Background Gradient */
   display: flex;
   flex-direction: column;
@@ -310,6 +316,21 @@ body {
 /**
 --------------------- NOTE PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
+#note-div{
+
+}
+
+#note-description-div{
+  border: 3px solid whitesmoke;
+  width: 90vw;
+  height: auto;
+  padding: 30px;
+  margin-bottom: 50px;
+}
+
+#note-div #note-content-div{
+  font-size: 30px;
+}
 
 /**
 --------------------- NOTESLIST PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -483,7 +504,11 @@ body {
 /**
 --------------------- BUYMEACOFFEE PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
-
+#buy-me-a-coffee-div #about-me-div{
+  width: 50vw;
+  height:auto;
+  font-size: 25px;
+}
 
 /**
 --------------------- ACTIVITY PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -557,4 +582,12 @@ body {
   border-radius: 5px;
   text-align: center;
   cursor: pointer;
+}
+
+/**
+--------------------- COMMUNITY PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
+#community-div{
+
 }

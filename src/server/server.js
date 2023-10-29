@@ -52,14 +52,15 @@ app.get("/learning_paths", (req, res)=>{
 });
 
 //post request to route '/add_note/:subject/:note_title/:note'. The purpose of this function is to add a note for a subject in the notes table. 
-app.post("/add_note/:subject/:note_title/:note", (req,res)=>{
+app.post("/add_note/:subject/:note_title/:note_content/:code_content", (req,res)=>{
     let subject = req.params.subject
-    let note = req.params.note
+    let note_content = req.params.note_content
     let note_title = req.params.note_title
+    let code_content = req.params.code_content
 
     //insert notes data into the notes table. 
-    let my_query = `INSERT INTO notes (note_title, note_subject, note_description) VALUES (?, ?, ?)`
-    con.query(my_query, [note_title, subject, note], (error,results)=>{
+    let my_query = `INSERT INTO notes (note_title, note_subject, note_description, code_snippet) VALUES (?, ?, ?, ?)`
+    con.query(my_query, [note_title, subject, note_content, code_content], (error,results)=>{
         if(error){
             res.send(error)
         }
@@ -77,7 +78,7 @@ app.post("/add_note/:subject/:note_title/:note", (req,res)=>{
     })
 });
 
-//get request to route '/get_note/s:subject'. The purpose of this function is to get ALL notes for a subject in the notes table.
+//get request to route '/get_note/:subject'. The purpose of this function is to get ALL notes for a subject in the notes table.
 app.get("/get_notes/:subject", (req,res)=>{
     let subject = req.params.subject
 
@@ -91,4 +92,18 @@ app.get("/get_notes/:subject", (req,res)=>{
         }
     })
 
+})
+
+app.get("/get_note/:title", (req,res)=>{
+    let title = req.params.title
+
+    let my_query = "SELECT * FROM notes WHERE note_title = (?)"
+    con.query(my_query, [title], (error, results)=>{
+        if(error){
+            res.send(error)
+        }
+        else{
+            res.send(results)
+        }
+    })
 })

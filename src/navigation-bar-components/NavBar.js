@@ -21,6 +21,9 @@ const NavBar = () => {
                         <Link to='/Activity'>Activity</Link>
                     </li>
                     <li>
+                        <Link to='/Community'>Community</Link>
+                    </li>
+                    <li>
                         <Link to='/BuyMeACoffee'>☕</Link> {/** This will be last li element so that the emoji appears big in css through nth last child */}
                     </li>
                 </ul>

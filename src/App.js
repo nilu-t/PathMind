@@ -7,9 +7,10 @@ import NotesList from './pages-components/NotesList.js'
 import Activity from './pages-components/Activity';
 import BuyMeACoffee from './pages-components/BuyMeACoffee';
 import NotFoundPage from './pages-components/NotFoundPage';
-import NavBar from './NavBar.js'
+import NavBar from './navigation-bar-components/NavBar.js'
 import MyPath from './pages-components/MyPath';
 import SignUp from './pages-components/SignUp';
+import Community from './pages-components/Community';
 
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 
@@ -30,6 +31,7 @@ function App() {
           <Route path='/BuyMeACoffee' element= {<BuyMeACoffee/>} />
           <Route path='/MyPath' element= {<MyPath/>} />
           <Route path='/SignUp' element={<SignUp/>}/>
+          <Route path='/Community' element={<Community/>}/>
           <Route path='*' element = {<NotFoundPage/>} /> 
         </Routes>
       </BrowserRouter>

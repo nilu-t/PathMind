@@ -5,7 +5,7 @@ const BuyMeACoffee = () => {
         <div id="buy-me-a-coffee-div">
             <h1> Hi, I'm Nilushanth 👋 </h1>
 
-            <div>
+            <div id="about-me-div">
                 <p>
                 I created this platform, PathMind, as a sandbox to hone my web development skills. My hope is that it can help others maintain an organized and goal-oriented learning journey. The source code for this site is open-source and can be found here: 
                 <a href="https://github.com/nilu-t">GitHub Repository</a>. 

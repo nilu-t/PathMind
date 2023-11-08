@@ -4,6 +4,8 @@ import firebase from 'firebase/compat/app'; // for backward compatibility
 import 'firebase/compat/auth'; // for backward compatibility
 
 import firebaseConfig from "./fireBaseConfig";
+import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
+
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -26,6 +28,7 @@ const SignUp = () => {
     const [user, setUser] = useState('');
     const [pass, setPass] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
+    const [myMessage, setMyMessage] = useState('');
     
     //Boolean states for signing up.
     // const [isUserEmpty, setUserEmpty] = useState(false);
@@ -34,27 +37,46 @@ const SignUp = () => {
 
     const handleSubmitButtonClick = () => {
 
-        //setting up firebase authentication to get the user signed in.
-        firebase.auth().createUserWithEmailAndPassword(user, pass)
-        .then((userCredential) => {
-          // Successfully signed in
-          var user = userCredential.user;
-          alert('Successfully signed up with email: ' + user.email);
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          if (errorCode === 'auth/email-already-in-use') {
-            alert('Email already in use.');
-          } else {
-            alert(errorMessage);
-          }
-        });
-        
-        alert(`${user}, ${pass}, ${confirmPass}`)
 
-        //TODO: posting the USERNAME data only (no passwords) into the mysql database for the user table.
-        
+        if ((user === '') || (pass === '' || confirmPass == '')){
+          setMyMessage('Username or Passwords are empty')
+        }
+        else if(pass === confirmPass){
+
+          //setting up firebase authentication to get the user signed in.
+          firebase.auth().createUserWithEmailAndPassword(user, pass)
+          .then((userCredential) => {
+            // Successfully signed in
+            setMyMessage(`Signup successful! Please check ${user} to verify your email.`);
+
+            // Send verification email
+            return userCredential.user.sendEmailVerification();
+          })
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+
+            /** Error codes from documentation https://firebase.google.com/docs/reference/js/auth#autherrorcodes */
+            if (errorCode === 'auth/email-already-in-use') {
+              //EMAIL_EXISTS error code customized message. 
+              setMyMessage(`Email: ${user}, already in use. Please log in instead.`)
+            } 
+            else if (errorCode === 'auth/weak-password'){
+              //WEAK_PASSWORD error code customized message.
+              setMyMessage(`Password should 6 characters minimum.`)
+            }
+            else {
+              //other errors. 
+              setMyMessage(`Encountered error: ${errorMessage}`)
+            }
+          });
+          
+          //TODO: posting the USERNAME data only (no passwords) into the mysql database for the user table.
+
+        }
+        else{
+          setMyMessage(`Passwords do not match`)
+        }
          
     }
 
@@ -93,6 +115,8 @@ const SignUp = () => {
         />
 
         <button type="button" onClick={handleSubmitButtonClick}>Sign Up</button>
+        <p>Already have an account? Sign in instead: <a href="SignIn">Sign in</a></p>
+        <p id="sign-up-message">{myMessage}</p>
       </form>
     );
 };

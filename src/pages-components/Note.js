@@ -1,40 +1,41 @@
 import { useParams } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 import { useState, useEffect } from "react";
 
 const Note = () => {
-    const myParams = useParams();
-    const [noteDesArr, setNoteDesArr] = useState([]);
-  
+    const { note_title, id } = useParams();
+    const [noteDescription, setNoteDescription] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
-      axios.get(`http://localhost:8000/get_note/${myParams.note_title}`)
-        .then((response) => {
-          setNoteDesArr(response.data);
-        })
-        .catch((error) => {
-          console.log(`error is ${error}`);
-        });
-    }, [myParams.note_title]);  //the effect will re-run if the note title changes. 
+        axios.get(`http://localhost:8000/get_note/${note_title}`)
+            .then((response) => {
+                setNoteDescription(response.data[0]);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.log(`error is ${error}`);
+                setIsLoading(false);
+            });
+    }, [note_title]);
 
-    const noteDescription = noteDesArr.map( (noteObj)=>{
-        return(
-            <div id="note-description-div">
-                <p>{noteObj.note_description}</p>
-                <p>{noteObj.code_snippet}</p>
-            </div>
-        )
-    })
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
+    if (!noteDescription) {
+        return <div>Note not found</div>;
+    }
 
-    return(
+    return (
         <div id="note-div">
-            <h1> Notes on "{myParams.note_title}" </h1>
-
-            <div id="note-content-div">
-                {noteDescription}
+            <h1> Notes on "{note_title}" </h1>
+            <div id="note-description-div">
+                <p>{noteDescription.note_description}</p>
+                <p>{noteDescription.code_snippet}</p>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Note;

@@ -1,7 +1,6 @@
-
-const express = require('express')
-const app = express()
-const mysql = require('mysql2')
+const express = require('express');
+const app = express();
+const mysql = require('mysql2');
 const cors = require('cors');
 
 const dbDetails = require("../database/dbConfig")(); //importing the function from dbConfig.js
@@ -37,6 +36,21 @@ app.listen(PORT, (error) => {
     }
 });
 
+//hen a user signs up, their email should be added to the users table.
+app.post("/add_user", (req, res) => {
+    const userEmail = req.body.email;
+
+    let userQuery = `INSERT INTO users (email) VALUES (?)`;
+    con.query(userQuery, [userEmail], (error, results) => {
+        if (error) {
+            res.send(error);
+        } else {
+            res.send({ message: "User added successfully!" });
+        }
+    });
+});
+
+
 // GET request to route 'learning_paths'
 app.get("/learning_paths", (req, res) => {
     con.query("SELECT * FROM learning_paths", (error, results) => {
@@ -50,35 +64,49 @@ app.get("/learning_paths", (req, res) => {
 
 // POST request to route '/add_note/:subject'
 app.post("/add_note/:subject", (req, res) => {
-    let subject = req.params.subject;
-    let note_content = req.body.noteContent;
-    let note_title = req.body.noteTitle;
-    let code_content = req.body.codeContent;
+    const subject = req.params.subject;
+    const note_content = req.body.noteContent;
+    const note_title = req.body.noteTitle;
+    const code_content = req.body.codeContent;
+    const user_email = req.body.userEmail;
 
-    // Insert notes data into the notes table
-    let my_query = `INSERT INTO notes (note_title, note_subject, note_description, code_snippet) VALUES (?, ?, ?, ?)`;
-    con.query(my_query, [note_title, subject, note_content, code_content], (error, results) => {
+    let userQuery = `SELECT * FROM users WHERE email = ?`;
+    con.query(userQuery, [user_email], (error, results) => {
         if (error) {
             res.send(error);
         } else {
-            // Get all the notes data from the notes table for viewing purposes
-            con.query("SELECT * FROM notes", (error, results) => {
-                if (error) {
-                    res.send(error);
-                } else {
-                    res.send(results);
-                }
-            });
+            if (results.length > 0) {
+                // Insert notes data into the notes table
+                let noteQuery = `INSERT INTO notes (note_title, note_subject, note_description, code_snippet, user_email) VALUES (?, ?, ?, ?, ?)`;
+                con.query(noteQuery, [note_title, subject, note_content, code_content, user_email], (error, results) => {
+                    if (error) {
+                        res.send(error);
+                    } else {
+                        // Get all the notes data from the notes table for viewing purposes
+                        con.query("SELECT * FROM notes", (error, results) => {
+                            if (error) {
+                                res.send(error);
+                            } else {
+                                res.send(results);
+                            }
+                        });
+                    }
+                });
+            } else {
+                res.send({ message: "User not found!" });
+            }
         }
     });
 });
 
+
 // GET request to route '/get_notes/:subject'
 app.get("/get_notes/:subject", (req, res) => {
     let subject = req.params.subject;
+    let user_email = req.query.email;
 
-    let my_query = `SELECT * FROM notes WHERE note_subject= (?)`;
-    con.query(my_query, [subject], (error, results) => {
+    let my_query = `SELECT * FROM notes WHERE note_subject= (?) AND user_email = ?`;
+    con.query(my_query, [subject, user_email], (error, results) => {
         if (error) {
             res.send(error);
         } else {
@@ -91,10 +119,10 @@ app.get("/get_notes/:subject", (req, res) => {
 app.get("/get_note/:title", (req, res) => {
     let title = req.params.title;
 
-    let my_query = "SELECT * FROM notes WHERE note_title = (?)";
+    let my_query = "SELECT * FROM notes WHERE note_title = ?";
     con.query(my_query, [title], (error, results) => {
         if (error) {
-            res.send(error);
+            res.status(500).send(error);
         } else {
             res.send(results);
         }

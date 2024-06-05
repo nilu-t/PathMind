@@ -1,10 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import firebase from 'firebase/compat/app'; // for backward compatibility
+import 'firebase/compat/auth'; // for backward compatibility
 
 const NotesList = () => {
     const myParams = useParams();
-
     const [noteContent, setNoteContent] = useState('');
     const [codeContent, setCodeContent] = useState('');
     const [noteTitle, setNoteTitle] = useState('');
@@ -12,9 +13,15 @@ const NotesList = () => {
     const [isEmptyTitle, setIsEmptyTitle] = useState('');
     const [numSubmitted, setNumSubmitted] = useState(0);
     const [myNotes, setMyNotes] = useState([]);
+    const [userEmail, setUserEmail] = useState('');
 
     useEffect(() => {
-        sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}`);
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                setUserEmail(user.email);
+                sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${user.email}`);
+            }
+        });
     }, [myParams.subject]);
 
     const incrementNumSubmitted = () => {
@@ -57,10 +64,11 @@ const NotesList = () => {
             const data = {
                 noteTitle: noteTitle,
                 noteContent: noteContent,
-                codeContent: codeContent
+                codeContent: codeContent,
+                userEmail: userEmail
             };
             sendPostRequest(`http://localhost:8000/add_note/${myParams.subject}`, data);
-            sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}`);
+            sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${userEmail}`);
         }
     };
 

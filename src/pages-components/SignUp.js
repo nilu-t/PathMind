@@ -1,13 +1,15 @@
 import { useState } from "react";
 import firebase from 'firebase/compat/app'; // for backward compatibility
 import 'firebase/compat/auth'; // for backward compatibility
+import axios from "axios";
 import firebaseConfig from "./fireBaseConfig";
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 const SignUp = () => {
-    // States for signing up.
     const [user, setUser] = useState('');
     const [pass, setPass] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
@@ -17,27 +19,24 @@ const SignUp = () => {
         if (user === '' || pass === '' || confirmPass === '') {
             setMyMessage('Username or Passwords are empty');
         } else if (pass === confirmPass) {
-            // Setting up Firebase authentication to get the user signed in.
             firebase.auth().createUserWithEmailAndPassword(user, pass)
                 .then((userCredential) => {
-                    // Successfully signed in
                     setMyMessage(`Signup successful! Please check ${user} to verify your email.`);
-                    // Send verification email
                     return userCredential.user.sendEmailVerification();
+                })
+                .then(() => {
+                    // Add the user email to the database
+                    return axios.post("http://localhost:8000/add_user", { email: user });
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
 
-                    /** Error codes from documentation https://firebase.google.com/docs/reference/js/auth#autherrorcodes */
                     if (errorCode === 'auth/email-already-in-use') {
-                        // EMAIL_EXISTS error code customized message.
                         setMyMessage(`Email: ${user}, already in use. Please log in instead.`);
                     } else if (errorCode === 'auth/weak-password') {
-                        // WEAK_PASSWORD error code customized message.
                         setMyMessage(`Password should be at least 6 characters.`);
                     } else {
-                        // Other errors.
                         setMyMessage(`Encountered error: ${errorMessage}`);
                     }
                 });

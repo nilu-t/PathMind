@@ -22,5 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-#my database file I created.
+#my database and firebase file I created.
 dbConfig.js
+fireBaseConfig.js

@@ -1,7 +1,6 @@
 USE pathmind;
 
 DROP TABLE IF EXISTS notes;
-DROP TABLE IF EXISTS learning_paths;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (

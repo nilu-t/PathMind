@@ -19,10 +19,3 @@ CREATE TABLE notes (
     code_snippet TEXT,
     FOREIGN KEY (user_email) REFERENCES users(email)
 );
-
-CREATE TABLE learning_paths (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    path_name VARCHAR(255) NOT NULL,
-    path_description TEXT NOT NULL
-);
-

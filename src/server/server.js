@@ -50,24 +50,12 @@ app.post("/add_user", (req, res) => {
     });
 });
 
-
-// GET request to route 'learning_paths'
-app.get("/learning_paths", (req, res) => {
-    con.query("SELECT * FROM learning_paths", (error, results) => {
-        if (error) {
-            res.send(error);
-        } else {
-            res.send(results);
-        }
-    });
-});
-
 // POST request to route '/add_note/:subject'
 app.post("/add_note/:subject", (req, res) => {
     const subject = req.params.subject;
-    const note_content = req.body.noteContent;
+    const note_content = decodeURIComponent(req.body.noteContent);
     const note_title = req.body.noteTitle;
-    const code_content = req.body.codeContent;
+    const code_content = decodeURIComponent(req.body.codeContent);
     const user_email = req.body.userEmail;
 
     let userQuery = `SELECT * FROM users WHERE email = ?`;

@@ -10,7 +10,6 @@ const NotesList = () => {
     const [codeContent, setCodeContent] = useState('');
     const [noteTitle, setNoteTitle] = useState('');
     const [isEmpty, setIsEmpty] = useState(false);
-    const [isEmptyTitle, setIsEmptyTitle] = useState('');
     const [numSubmitted, setNumSubmitted] = useState(0);
     const [myNotes, setMyNotes] = useState([]);
     const [userEmail, setUserEmail] = useState('');
@@ -28,8 +27,8 @@ const NotesList = () => {
         setNumSubmitted(numSubmitted + 1);
     };
 
-    const sendPostRequest = (route_name, data) => {
-        axios.post(route_name, data)
+    const sendPostRequest = async(route_name, data) => {
+        return axios.post(route_name, data)
             .then((response) => {
                 console.log(`response from post request is ${JSON.stringify(response.data, null, 2)}`);
             })
@@ -38,8 +37,8 @@ const NotesList = () => {
             });
     };
 
-    const sendGetRequest = (route_name) => {
-        axios.get(route_name)
+    const sendGetRequest = async(route_name) => {
+        return axios.get(route_name)
             .then((response) => {
                 console.log(`response from get request is ${JSON.stringify(response.data, null, 2)}`);
                 setMyNotes(response.data);
@@ -49,26 +48,25 @@ const NotesList = () => {
             });
     };
 
-    const handleSubmitButtonClick = () => {
+    const handleSubmitButtonClick = async() => {
         incrementNumSubmitted();
 
         if (noteContent.trim() === '') {
             setIsEmpty(true);
             return;
-        } else if (noteTitle.trim() === '') {
-            setIsEmptyTitle(true);
-            return;
         } else {
             setIsEmpty(false);
             setNumSubmitted(0);
+
             const data = {
                 noteTitle: noteTitle,
-                noteContent: noteContent,
-                codeContent: codeContent,
+                noteContent: encodeURIComponent(noteContent),
+                codeContent: encodeURIComponent(codeContent),
                 userEmail: userEmail
             };
-            sendPostRequest(`http://localhost:8000/add_note/${myParams.subject}`, data);
-            sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${userEmail}`);
+
+            await sendPostRequest(`http://localhost:8000/add_note/${myParams.subject}`, data);
+            await sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${userEmail}`);
         }
     };
 

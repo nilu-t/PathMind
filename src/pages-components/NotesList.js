@@ -59,7 +59,7 @@ const NotesList = () => {
 
     const handleOptimizeButtonClick = async() =>{
 
-        let enhanced_note = await sendGetRequest(`http://localhost:8000/enhance_note?noteContent=${noteContent}&codeContent=${codeContent}&noteSubject=${myParams.subject}`);
+        let enhanced_note = await sendGetRequest(`http://localhost:8000/enhance_note?noteContent=${encodeURIComponent(noteContent)}&codeContent=${encodeURIComponent(codeContent)}&noteSubject=${myParams.subject}`);
         setNoteContent(enhanced_note);
 
     }
@@ -83,10 +83,26 @@ const NotesList = () => {
             };
 
             await sendPostRequest(`http://localhost:8000/add_note/`, data);
+
+            //After successfully adding the note, update the state to show that adding the new note worked.
             let old_notes = await sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${userEmail}`);
             setMyNotes(old_notes);
         }
     };
+
+    const handleDeleteButtonClick = async(noteTitleToDelete) =>{
+
+        const data = {
+            noteTitle: noteTitleToDelete,
+            userEmail: userEmail
+        }
+
+        await sendPostRequest('http://localhost:8000/delete_note', data);
+
+        // After successful delete, update the state to show that removing the deleted note worked.
+        let new_notes = await sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${userEmail}`);
+        setMyNotes(new_notes);
+    }
 
     let seenTitles = {};
 
@@ -105,11 +121,18 @@ const NotesList = () => {
     const viewNotes = myNotes.map((noteObj) => {
         return (
             <Link to={`/Note/${noteObj.note_title}/${noteObj.id}`} key={noteObj.id}>
-                <p>{noteObj.note_title}</p>
+                <p>
+                    {noteObj.note_title} 
+                    <button onClick={(event) => {
+                        event.preventDefault(); // since we're deleting the note, prevent the default behavior which is redirecting to the note link 
+                        event.stopPropagation();  //we're deleting the note, so we don't want to redirect to the note compontent. 
+                        handleDeleteButtonClick(noteObj.note_title)
+                    }}>X</button>
+                </p>
             </Link>
         );
     });
-
+    
     return (
         <div id="notes-list-div">
             <h1 id="title"> {myParams.subject} Notebook</h1>

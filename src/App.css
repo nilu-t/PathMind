@@ -386,6 +386,24 @@ body {
   width: auto;
 }
 
+#notes-list-div #view-notes-div button{
+  background-color: transparent;
+  border:none;
+  border-radius: 25px;
+  color: red;
+  /* border-color: darkred; */
+  border-width: 1px;
+  padding: 2px 5px;
+  margin-left: 10px;
+  font-size: medium;
+}
+
+#notes-list-div #view-notes-div button:hover{
+  box-shadow: 0px 8px 15px rgba(255, 0, 0, 0.1);
+  transition: all 0.3 ease 0s;
+  cursor: pointer;
+}
+
 #notes-list-div #title {
   font-size: 60px;
   font-weight: 500;

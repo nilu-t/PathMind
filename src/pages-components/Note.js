@@ -30,6 +30,10 @@ const Note = () => {
         return <div>Note not found</div>;
     }
 
+    const handleDeleteNoteButton = async() =>{
+        
+    }
+
     return (
         <div id="note-div">
             <h1> Notes on: {note_title} </h1>

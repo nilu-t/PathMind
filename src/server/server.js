@@ -45,8 +45,8 @@ app.listen(PORT, (error) => {
 //GET request to route 'enhance_note' to get the enhanced note content
 app.get('/enhance_note', async(req,res) =>{
 
-    let noteContent = req.query.noteContent;
-    let codeContent = req.query.codeContent;
+    let noteContent = decodeURIComponent(req.query.noteContent);
+    let codeContent = decodeURIComponent(req.query.codeContent);
     let noteSubject = req.query.noteSubject;
 
     const messages = [
@@ -85,11 +85,11 @@ app.post("/add_user", (req, res) => {
     });
 });
 
-// POST request to route '/add_note/:subject'
+// POST request to route '/add_note'
 app.post("/add_note", (req, res) => {
     const subject = req.body.subject;
-    const note_content = decodeURIComponent(req.body.noteContent);
-    const note_title = req.body.noteTitle;
+    const note_content = req.body.noteContent;
+    const note_title = decodeURIComponent(req.body.noteTitle);
     const code_content = decodeURIComponent(req.body.codeContent);
     const user_email = req.body.userEmail;
 
@@ -121,6 +121,24 @@ app.post("/add_note", (req, res) => {
         }
     });
 });
+
+//POST request to route '/delete_note'
+app.post("/delete_note", (req,res) =>{
+
+    let user_email = req.body.userEmail;
+    let note_title = req.body.noteTitle;
+
+    let my_query = "DELETE FROM notes WHERE note_title = ? AND user_email = ?"
+
+    con.query(my_query, [note_title, user_email], (error, results) =>{
+        if(error){
+            res.send(error)
+        }
+        else{
+            res.send(results)
+        }
+    })
+})
 
 
 // GET request to route '/get_notes/:subject'

@@ -3,12 +3,18 @@ const app = express();
 const mysql = require('mysql2');
 const cors = require('cors');
 
+const OpenAI = require("openai");
 const dbDetails = require("../database/dbConfig")(); //importing the function from dbConfig.js
 
 const PORT = 8000;
 
 app.use(express.json()); // Middleware required for accessing post data.
 app.use(cors()); // Enable CORS for all routes
+
+//Creating the open ai connection object
+const openai = new OpenAI({
+    apiKey: dbDetails.open_ai_key, 
+  });
 
 // Creating the MySQL connection object
 var con = mysql.createConnection({
@@ -36,7 +42,36 @@ app.listen(PORT, (error) => {
     }
 });
 
-//hen a user signs up, their email should be added to the users table.
+//GET request to route 'enhance_note' to get the enhanced note content
+app.get('/enhance_note', async(req,res) =>{
+
+    let noteContent = req.query.noteContent;
+    let codeContent = req.query.codeContent;
+    let noteSubject = req.query.noteSubject;
+
+    const messages = [
+        { role: "system", content: "Optimize this note content" }, 
+        { role: "user", content: `Enhance this coding note with note content: ${noteContent}, code content: ${codeContent}, note subject: ${noteSubject}` } 
+      ];
+    
+      try {
+        const response = await openai.chat.completions.create({
+          model: "gpt-3.5-turbo", //using chat gpt 3.5 model 
+          messages: messages, 
+          max_tokens: 1000, //we are telling the model that the output cannot go over this many tokens. 
+        });
+    
+        const enhancedNote = response.choices[0].message.content.trim();
+        
+        res.send(enhancedNote);
+
+      } catch (error) {
+        console.error("Error enhancing note:", error);
+        throw error;
+      }
+})
+
+//when a user signs up, their email should be added to the users table.
 app.post("/add_user", (req, res) => {
     const userEmail = req.body.email;
 
@@ -51,8 +86,8 @@ app.post("/add_user", (req, res) => {
 });
 
 // POST request to route '/add_note/:subject'
-app.post("/add_note/:subject", (req, res) => {
-    const subject = req.params.subject;
+app.post("/add_note", (req, res) => {
+    const subject = req.body.subject;
     const note_content = decodeURIComponent(req.body.noteContent);
     const note_title = req.body.noteTitle;
     const code_content = decodeURIComponent(req.body.codeContent);
@@ -106,9 +141,10 @@ app.get("/get_notes/:subject", (req, res) => {
 // GET request to route '/get_note/:title'
 app.get("/get_note/:title", (req, res) => {
     let title = req.params.title;
+    let user_email = req.query.email;
 
-    let my_query = "SELECT * FROM notes WHERE note_title = ?";
-    con.query(my_query, [title], (error, results) => {
+    let my_query = "SELECT * FROM notes WHERE note_title = ? AND user_email = ?";
+    con.query(my_query, [title, user_email], (error, results) => {
         if (error) {
             res.status(500).send(error);
         } else {

@@ -15,38 +15,54 @@ const NotesList = () => {
     const [userEmail, setUserEmail] = useState('');
 
     useEffect(() => {
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                setUserEmail(user.email);
-                sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${user.email}`);
-            }
-        });
+        const fetchNotes = async () => {
+            firebase.auth().onAuthStateChanged(async (user) => {
+                if (user) {
+                    setUserEmail(user.email);
+                    try {
+                        const old_notes = await sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${user.email}`);
+                        setMyNotes(old_notes);
+                    } catch (error) {
+                        console.error("Error fetching notes:", error);
+                    }
+                }
+            });
+        };
+    
+        fetchNotes();
     }, [myParams.subject]);
-
+    
     const incrementNumSubmitted = () => {
         setNumSubmitted(numSubmitted + 1);
     };
 
     const sendPostRequest = async(route_name, data) => {
-        return axios.post(route_name, data)
-            .then((response) => {
-                console.log(`response from post request is ${JSON.stringify(response.data, null, 2)}`);
-            })
-            .catch((error) => {
-                console.log(`error is ${error}`);
-            });
+        try{
+            const response = await axios.post(route_name, data)
+            console.log(`response from post request is ${JSON.stringify(response.data, null, 2)}`);
+            return response.data
+        }
+        catch (error) {
+            console.log(`error from get request is ${error}`);
+        }
+};
+
+    const sendGetRequest = async (route_name) => {
+        try {
+            const response = await axios.get(route_name);
+            console.log(`response from get request is ${JSON.stringify(response.data, null, 2)}`);
+            return response.data;
+        } catch (error) {
+            console.log(`error from get request is ${error}`);
+        }
     };
 
-    const sendGetRequest = async(route_name) => {
-        return axios.get(route_name)
-            .then((response) => {
-                console.log(`response from get request is ${JSON.stringify(response.data, null, 2)}`);
-                setMyNotes(response.data);
-            })
-            .catch((error) => {
-                console.log(`error is ${error}`);
-            });
-    };
+    const handleOptimizeButtonClick = async() =>{
+
+        let enhanced_note = await sendGetRequest(`http://localhost:8000/enhance_note?noteContent=${noteContent}&codeContent=${codeContent}&noteSubject=${myParams.subject}`);
+        setNoteContent(enhanced_note);
+
+    }
 
     const handleSubmitButtonClick = async() => {
         incrementNumSubmitted();
@@ -62,11 +78,13 @@ const NotesList = () => {
                 noteTitle: noteTitle,
                 noteContent: encodeURIComponent(noteContent),
                 codeContent: encodeURIComponent(codeContent),
-                userEmail: userEmail
+                userEmail: userEmail,
+                subject: myParams.subject
             };
 
-            await sendPostRequest(`http://localhost:8000/add_note/${myParams.subject}`, data);
-            await sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${userEmail}`);
+            await sendPostRequest(`http://localhost:8000/add_note/`, data);
+            let old_notes = await sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${userEmail}`);
+            setMyNotes(old_notes);
         }
     };
 
@@ -123,6 +141,7 @@ const NotesList = () => {
                             </div>
                         </div>
                         <div id="submit-div">
+                            <button onClick={handleOptimizeButtonClick}>Optimize</button>
                             <button onClick={handleSubmitButtonClick}>Submit</button>
                             {isEmpty && numSubmitted === 1 && <p className="error-message">What kind of note is empty? 🤨</p>}
                             {isEmpty && numSubmitted === 2 && <p className="error-message">Again, what kind of note is empty? 🤨</p>}
@@ -152,10 +171,6 @@ const NotesList = () => {
                             <p>Time to make some notes!</p>
                             <img src="/other-images/empty-note.png" draggable={false}></img>
                         </>}
-                </div>
-
-                <div id="favourite-notes-div">
-                    <h1>Favourite Notes</h1>
                 </div>
             </div>
         </div>

@@ -317,8 +317,7 @@ body {
 --------------------- NOTE PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 #note-description-div p{
-  white-space: pre-wrap
-
+  white-space: pre-wrap; 
 }
 
 #note-description-div{
@@ -327,10 +326,18 @@ body {
   height: auto;
   padding: 30px;
   margin-bottom: 50px;
+  font-size: 30px;  
+  font-weight: bold; 
+  letter-spacing: 1px; 
+  line-height: 1.4; 
+
 }
 
-#note-div #note-content-div{
-  font-size: 30px;
+#note-div #note-content-div {
+  font-weight: bold;  
+  color: #2C3E50;  
+  letter-spacing: 1px;  
+  line-height: 1.4; 
 }
 
 /**
@@ -344,7 +351,7 @@ body {
 }
 
 #notes-list-div #view-notes-div,
-#notes-list-div #favourite-notes-div {
+#notes-list-div {
   flex: 1;
   margin-right: 5%;
   background-color: #2c3e5058;
@@ -355,12 +362,12 @@ body {
 }
 
 #notes-list-div #view-notes-div a,
-#notes-list-div #favourite-notes-div a{
+#notes-list-div  a{
   text-decoration: none;
 }
 
 #notes-list-div #view-notes-div p,
-#notes-list-div #favourite-notes-div p{
+#notes-list-div  p{
   color:whitesmoke;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -369,7 +376,7 @@ body {
 }
 
 #notes-list-div #view-notes-div p:hover,
-#notes-list-div #favourite-notes-div p:hover{
+#notes-list-div  p:hover{
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3 ease 0s;
 }
@@ -395,10 +402,15 @@ body {
 }
 
 #notes-list-div #left-container {
-  flex: 2;
+  flex:2;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #2c3e5058;
+  border-radius: 25px;
+
+  padding: 10px;
+  
 }
 
 #notes-list-div #left-container button{
@@ -408,10 +420,10 @@ body {
   border: 1px solid whitesmoke;
   border-radius: 15px;
   background-color: #ECF0F1;
-  color: #333;
   cursor: pointer;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease 0s;
+  margin-right: 50px;
 }
 
 #notes-list-div #left-container button:hover {
@@ -423,12 +435,10 @@ body {
 
 #notes-list-div #left-part-div {
   text-align: center;
-  height: 90%;
-  width: 90%;
+  height: 100%;
+  width: 100%;
   margin-right: 5%;
-  background-color: #2c3e5058;
-  border-radius: 25px;
-  padding: 10px;
+  /* background-color: #2c3e5058; */
 }
 
 #notes-list-div #left-part-div input {

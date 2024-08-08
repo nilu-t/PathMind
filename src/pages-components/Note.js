@@ -1,14 +1,17 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import firebase from 'firebase/compat/app'; // for backward compatibility
+import 'firebase/compat/auth'; // for backward compatibility
 
 const Note = () => {
     const { note_title, id } = useParams();
     const [noteDescription, setNoteDescription] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const user = firebase.auth().currentUser;
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/get_note/${note_title}`)
+        axios.get(`http://localhost:8000/get_note/${note_title}?email=${user.email}`)
             .then((response) => {
                 setNoteDescription(response.data[0]);
                 setIsLoading(false);
@@ -29,7 +32,7 @@ const Note = () => {
 
     return (
         <div id="note-div">
-            <h1> Notes on "{note_title}" </h1>
+            <h1> Notes on: {note_title} </h1>
             <div id="note-description-div">
                 <p>{noteDescription.note_description}</p>
                 <p>{noteDescription.code_snippet}</p>

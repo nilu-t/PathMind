@@ -88,8 +88,8 @@ app.post("/add_user", (req, res) => {
 // POST request to route '/add_note'
 app.post("/add_note", (req, res) => {
     const subject = req.body.subject;
-    const note_content = req.body.noteContent;
-    const note_title = decodeURIComponent(req.body.noteTitle);
+    const note_content = decodeURIComponent(req.body.noteContent);
+    const note_title = req.body.noteTitle;
     const code_content = decodeURIComponent(req.body.codeContent);
     const user_email = req.body.userEmail;
 
@@ -170,3 +170,16 @@ app.get("/get_note/:title", (req, res) => {
         }
     });
 });
+
+//GET request to route '/get_total_notes'
+app.get("/get_total_notes", (req, res) =>{
+    let my_query = 'SELECT COUNT(id) as totalNotes FROM notes'
+    con.query(my_query, (error, results) =>{
+        if (error) {
+            res.status(500).send(error);
+        } else {
+            res.send({'totalNotes':results[0].totalNotes});
+        }
+    })
+});
+

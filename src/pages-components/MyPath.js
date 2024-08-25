@@ -15,6 +15,7 @@ const MyPath = () => {
             { myLearningPaths.map( (pathObj, index) => {
                 const subjectsArr = pathObj.subjects;
 
+                //function to map over the learning path subjects. For each subject we create its associated link to the notes list and corresponding image.
                 const images = subjectsArr.map((subject, i) =>{
                     const imagePath = `learning-path-images/computer-science/${convertToImageNamePNG(subject)}`; //from the public folder so the path can be accessed from there. 
 
@@ -32,6 +33,7 @@ const MyPath = () => {
                     );
                 })
 
+                //for each learning path a 'path card' is rendered. 
                 return(
                 <div className="path-card" key={index}>
                     <h1 id="path-title"> { pathObj.title } </h1>

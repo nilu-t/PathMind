@@ -45,7 +45,7 @@ const NotesList = () => {
         catch (error) {
             console.log(`error from get request is ${error}`);
         }
-};
+    };
 
     const sendGetRequest = async (route_name) => {
         try {

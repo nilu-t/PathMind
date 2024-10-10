@@ -20,6 +20,8 @@ const Note = () => {
                 console.log(`error is ${error}`);
                 setIsLoading(false);
             });
+        
+
     }, [note_title]);
 
     if (isLoading) {
@@ -28,10 +30,6 @@ const Note = () => {
 
     if (!noteDescription) {
         return <div>Note not found</div>;
-    }
-
-    const handleDeleteNoteButton = async() =>{
-        
     }
 
     return (

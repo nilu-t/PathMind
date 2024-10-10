@@ -3,7 +3,7 @@
       {
         "title": "Popular Programming Languages",
         "description": "Overview of the most commonly used programming languages.",
-        "subjects": ["Python", "JavaScript", "Java", "C++", "C#", "Go", "Ruby"]
+        "subjects": ["Python", "JavaScript", "Java", "C++", "C#", "Go", "Ruby", "Kotlin", "Rust"]
       },
       {
         "title": "Front-End Development",
@@ -50,6 +50,7 @@
         "description": "Analyzing and interpreting complex data.",
         "subjects": ["Python", "R", "Data Visualization"]
       }
+
     ]
 }
   

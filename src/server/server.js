@@ -2,14 +2,28 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql2');
 const cors = require('cors');
-
 const OpenAI = require("openai");
 const dbDetails = require("../database/dbConfig")(); //importing the function from dbConfig.js
+const fs = require('fs');
+const multer = require('multer'); //middleware for handling file uploads into a specific directory. 
+const path = require("path");
+const pdfParse = require("pdf-parse");
 
+const upload = multer({dest: 'uploaded_files/'}); 
 const PORT = 8000;
 
 app.use(express.json()); // Middleware required for accessing post data.
 app.use(cors()); // Enable CORS for all routes
+
+const executeQuery = async(req, res, my_query_params, my_query) =>{
+    con.query(my_query, my_query_params, (error, results) =>{
+        if (error) {
+            res.status(500).send(error);
+        } else {
+            return results;
+        }
+    })
+}
 
 //Creating the open ai connection object
 const openai = new OpenAI({
@@ -53,22 +67,22 @@ app.get('/enhance_note', async(req,res) =>{
         { role: "system", content: "Optimize this note content" }, 
         { role: "user", content: `Enhance this coding note with note content: ${noteContent}, code content: ${codeContent}, note subject: ${noteSubject}` } 
       ];
-    
-      try {
-        const response = await openai.chat.completions.create({
-          model: "gpt-3.5-turbo", //using chat gpt 3.5 model 
-          messages: messages, 
-          max_tokens: 1000, //we are telling the model that the output cannot go over this many tokens. 
-        });
-    
-        const enhancedNote = response.choices[0].message.content.trim();
-        
-        res.send(enhancedNote);
 
-      } catch (error) {
-        console.error("Error enhancing note:", error);
-        throw error;
-      }
+    try {
+    const response = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo", //using chat gpt 3.5 model 
+        messages: messages, 
+        max_tokens: 1000, //we are telling the model that the output cannot go over this many tokens. 
+    });
+
+    const enhancedNote = response.choices[0].message.content.trim();
+    
+    res.send(enhancedNote);
+
+    } catch (error) {
+    console.error("Error enhancing note:", error);
+    throw error;
+    }
 })
 
 //when a user signs up, their email should be added to the users table.
@@ -123,33 +137,48 @@ app.post("/add_note", (req, res) => {
 });
 
 //POST request to route '/delete_note'
-app.post("/delete_note", (req,res) =>{
+app.post("/delete_note", async(req,res) =>{
 
-    let user_email = req.body.userEmail;
-    let note_title = req.body.noteTitle;
-
+    let my_query_params = [req.body.noteTitle, req.body.userEmail]
     let my_query = "DELETE FROM notes WHERE note_title = ? AND user_email = ?"
 
-    con.query(my_query, [note_title, user_email], (error, results) =>{
-        if(error){
-            res.send(error)
+    let results = await executeQuery(req, res, my_query_params, my_query);
+    res.send(results);
+
+});
+
+//POST request to upload a new note.
+app.post("/upload_note", upload.single('file'), async(req,res) =>{
+    let file = req.file;
+
+    const filePath = path.join(__dirname, file.path); //absolute path for the directory (server directory) and the file.path (from multer).
+
+    //reading the uploading file content and sending back all the extracted text. 
+    fs.readFile(filePath, async(err, fileContent) =>{
+        if(err){
+            res.status(500).send(err);
         }
         else{
-            res.send(results)
+            const pdfData = await pdfParse(fileContent);
+            res.send({
+                content: pdfData.text, 
+                name: file.originalname
+            }
+            );
         }
-    })
-})
-
+    });
+}); 
 
 // GET request to route '/get_notes/:subject'
 app.get("/get_notes/:subject", (req, res) => {
+    
     let subject = req.params.subject;
     let user_email = req.query.email;
 
-    let my_query = `SELECT * FROM notes WHERE note_subject= (?) AND user_email = ?`;
+    let my_query = `SELECT * FROM notes WHERE note_subject=(?) AND user_email = ?`;
     con.query(my_query, [subject, user_email], (error, results) => {
         if (error) {
-            res.send(error);
+            res.status(500).send(error);
         } else {
             res.send(results);
         }

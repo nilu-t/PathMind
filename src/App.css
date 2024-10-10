@@ -265,6 +265,20 @@ body {
   cursor: pointer;
 }
 
+#promotions-div label{
+  font-size: x-small;
+  text-align: center;
+}
+
+#promotions-div input[type="checkbox"] {
+  width: 15px;
+  height: 15px; 
+  transform: scale(0.7);
+  margin: 0 5px;
+}
+
+
+
 /**
 --------------------- ABOUT PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
@@ -634,7 +648,7 @@ body {
 
 #my-path-div .path-card {
   height: auto; /* Adjust height to content */
-  width: calc(33.3333% - 20px); /* Adjust width for 3 columns with gaps */
+  width: calc(33.3333% - 10px); /* Adjust width for 3 columns with gaps */
   max-width: calc(33.3333% - 20px); /* Ensure it doesn't exceed container */
   background-color: rgba(240, 248, 255, 0.05);
   margin: 10px;
@@ -646,7 +660,7 @@ body {
 
 #path-images img {
   width: auto;
-  height: 100px;
+  height: 70px;
   margin: 15px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;

@@ -9,8 +9,8 @@ const NotesList = () => {
     const [noteContent, setNoteContent] = useState('');
     const [codeContent, setCodeContent] = useState('');
     const [noteTitle, setNoteTitle] = useState('');
-    const [isEmpty, setIsEmpty] = useState(false);
     const [numSubmitted, setNumSubmitted] = useState(0);
+    const [noteAddMessage, setNoteAddMessage] = useState('No note added yet.');
     const [myNotes, setMyNotes] = useState([]);
     const [userEmail, setUserEmail] = useState('');
 
@@ -36,9 +36,9 @@ const NotesList = () => {
         setNumSubmitted(numSubmitted + 1);
     };
 
-    const sendPostRequest = async(route_name, data) => {
+    const sendPostRequest = async(route_name, data, config={}) => {
         try{
-            const response = await axios.post(route_name, data)
+            const response = await axios.post(route_name, data, config);
             console.log(`response from post request is ${JSON.stringify(response.data, null, 2)}`);
             return response.data
         }
@@ -58,37 +58,39 @@ const NotesList = () => {
     };
 
     const handleOptimizeButtonClick = async() =>{
-
         let enhanced_note = await sendGetRequest(`http://localhost:8000/enhance_note?noteContent=${encodeURIComponent(noteContent)}&codeContent=${encodeURIComponent(codeContent)}&noteSubject=${myParams.subject}`);
         setNoteContent(enhanced_note);
-
     }
 
-    const handleSubmitButtonClick = async() => {
-        incrementNumSubmitted();
+    const handleFileUpload = async(event) =>{
+        let fileInput = event.target; 
+        let file = fileInput.files[0];
 
-        if (noteContent.trim() === '') {
-            setIsEmpty(true);
-            return;
-        } else {
-            setIsEmpty(false);
-            setNumSubmitted(0);
+        if (file.type === "application/pdf"){
+            console.log(file);
 
-            const data = {
-                noteTitle: noteTitle,
-                noteContent: encodeURIComponent(noteContent),
-                codeContent: encodeURIComponent(codeContent),
-                userEmail: userEmail,
-                subject: myParams.subject
-            };
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('name', file.name);
+            formData.append('type', file.type);
+            formData.append('lastModifiedDate', file.lastModifiedDate);
 
-            await sendPostRequest(`http://localhost:8000/add_note/`, data);
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                }
+            }
 
-            //After successfully adding the note, update the state to show that adding the new note worked.
-            let old_notes = await sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${userEmail}`);
-            setMyNotes(old_notes);
+            let fileContent = await sendPostRequest('http://localhost:8000/upload_note', formData, config);
+            setNoteContent(fileContent.content); //update the note content to display the parsed PDF file.
+            setNoteTitle(fileContent.name); //update the note title of the PDF file. 
         }
-    };
+        else{
+            // The uploaded file is not suitable for parsing, so we alert the user and clear the file input.
+            alert("The file uploaded is not supported. Please upload a PDF file.");
+            fileInput.value = ''; 
+        }
+    }
 
     const handleDeleteButtonClick = async(noteTitleToDelete) =>{
 
@@ -103,6 +105,49 @@ const NotesList = () => {
         let new_notes = await sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${userEmail}`);
         setMyNotes(new_notes);
     }
+
+
+    const handleSubmitButtonClick = async() => {
+        incrementNumSubmitted();
+
+        if (noteContent.trim() === '') {
+            if(numSubmitted === 1){
+                setNoteAddMessage("What kind of note is empty? 🤨");
+            }
+            else if (numSubmitted === 2){
+                setNoteAddMessage("Again, what kind of note is empty?");
+            }
+            else if (numSubmitted >= 3){
+                setNoteAddMessage("Do you think I am a joke? 😔");
+            }
+
+            return;
+
+        } else {
+            setNoteAddMessage(`You have added note: ${noteTitle}`); 
+
+            setNumSubmitted(0);
+
+            const data = {
+                noteTitle: noteTitle,
+                noteContent: encodeURIComponent(noteContent),
+                codeContent: encodeURIComponent(codeContent),
+                userEmail: userEmail,
+                subject: myParams.subject
+            };
+
+            let addNoteResponse = await sendPostRequest(`http://localhost:8000/add_note/`, data);
+
+            if(addNoteResponse === "User not found!"){
+                alert("Please sign-up or sign-in to PathMind before adding any notes!");
+            }
+
+
+            //After successfully adding the note, update the state to show that adding the new note worked.
+            let old_notes = await sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${userEmail}`);
+            setMyNotes(old_notes);
+        }
+    };
 
     let seenTitles = {};
 
@@ -142,7 +187,7 @@ const NotesList = () => {
                         <div id="left-part-div">
                             <h1>Upload new note </h1>
                             <p id="files-accepted">Accepts: .pdf</p>
-                            <input type="file" />
+                            <input type="file" onChange={handleFileUpload}/>
 
                             <h1>OR</h1>
                             <div id="paste-note-div">
@@ -166,9 +211,7 @@ const NotesList = () => {
                         <div id="submit-div">
                             <button onClick={handleOptimizeButtonClick}>Optimize</button>
                             <button onClick={handleSubmitButtonClick}>Submit</button>
-                            {isEmpty && numSubmitted === 1 && <p className="error-message">What kind of note is empty? 🤨</p>}
-                            {isEmpty && numSubmitted === 2 && <p className="error-message">Again, what kind of note is empty? 🤨</p>}
-                            {numSubmitted >= 3 && isEmpty && <p>Do you think I am a joke? 😔</p>}
+                            {<p>{noteAddMessage}</p>}
                         </div>
                     </div>
 
@@ -189,7 +232,7 @@ const NotesList = () => {
                 <div id="view-notes-div">
                     <h1>View Notes</h1>
                     {viewNotes}
-                    {myNotes.length === 0 &&
+                    {myNotes && myNotes.length === 0 &&
                         <>
                             <p>Time to make some notes!</p>
                             <img src="/other-images/empty-note.png" draggable={false}></img>

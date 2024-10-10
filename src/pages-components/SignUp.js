@@ -14,6 +14,7 @@ const SignUp = () => {
     const [pass, setPass] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
     const [myMessage, setMyMessage] = useState('');
+    const [checked, setChecked] = useState(false)
 
     const handleSubmitButtonClick = () => {
         if (user === '' || pass === '' || confirmPass === '') {
@@ -80,6 +81,16 @@ const SignUp = () => {
             />
 
             <button type="button" onClick={handleSubmitButtonClick}>Sign Up</button>
+
+            <div id="promotions-div">
+                <label>You are {checked? '' : 'not'} signed up for future promotions / offers (optional)</label>
+                <input 
+                    type="checkbox" 
+                    onChange={()=> setChecked(!checked)} 
+                    value={checked}
+                />
+            </div>
+
             <p>Already have an account? Sign in instead: <a href="SignIn">Sign in</a></p>
             <p id="sign-up-message">{myMessage}</p>
         </form>

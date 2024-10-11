@@ -358,6 +358,48 @@ body {
 --------------------- NOTESLIST PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 
+.custom-modal {
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2C3E50;
+  margin-left: 50vw;
+  margin-top: 50vh;
+  transform: translate(-50%, -50%);
+/*👉  border: 2px solid black;
+👈*/  border-radius: 10px;
+}
+
+.custom-modal-overlay{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  z-index: 1;
+}
+
+.custom-modal:focus{
+  outline:none; 
+}
+
+.expand-icon, 
+.down-close-icon,
+.pdf-file-icon{
+  font-size: 20px;
+  color:rgb(255, 255, 255);
+}
+
+.expand-icon:hover, .down-close-icon:hover{
+  cursor: pointer;
+}
+
+.expand-icon{
+  position: relative;
+  left:40%
+}
+
 #notes-list-div #full-page-div {
   display: flex;
   width: 90vw;
@@ -424,9 +466,9 @@ body {
   text-transform: capitalize;
 }
 
-#notes-list-div #files-accepted {
+/*👉#notes-list-div #files-accepted {
   text-align: center;
-}
+}👈*/
 
 #notes-list-div #entire-note-upload-div {
   flex: 5;
@@ -440,7 +482,6 @@ body {
   align-items: center;
   background-color: #2c3e5058;
   border-radius: 25px;
-
   padding: 10px;
   
 }
@@ -499,7 +540,8 @@ body {
 }
 
 #notes-list-div #right-part-div textarea,
-#paste-note-div #note-text {
+#paste-note-div #note-text,
+#modal-note-content{
   width: 80%;
   height: 80%;
   background-color: transparent;
@@ -510,7 +552,13 @@ body {
   font-size: 16px;
 }
 
-#paste-note-div #note-title{
+#modal-note-content{
+  width: 80%;
+  height: 80vh; /* larger height since the purpose of the modal is to display the note content larger. */
+  background-color: #4c6f8f63;
+}
+
+#paste-note-div #note-title, #modal-note-title{
   background-color: transparent;
   border: none;
   margin-bottom: 10px;
@@ -522,24 +570,34 @@ body {
   height: auto;
 }
 
+#modal-note-title{
+  background-color: #4c6f8f63;
+  margin-top: 10px;
+}
+
 #paste-note-div #note-title::placeholder{
   text-align: left;
 }
 
 #notes-list-div #right-part-div textarea:focus,
-#paste-note-div textarea:focus {
+#paste-note-div textarea:focus,
+#modal-note-title:focus,
+#modal-note-content:focus {
   outline: none;
 }
 
 #notes-list-div #right-part-div textarea::placeholder,
-#paste-note-div textarea::placeholder {
-  color: #ffffff60;
+#paste-note-div textarea::placeholder,
+#modal-note-title::placeholder,
+#modal-note-content::placeholder {
+  color: #ffffffa1;
   font-size: 20px;
   text-align: center;
 }
 
 #paste-note-div {
   height: 80%;
+  width: auto;
 }
 
 

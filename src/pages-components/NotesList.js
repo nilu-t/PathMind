@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import firebase from 'firebase/compat/app'; // for backward compatibility
 import 'firebase/compat/auth'; // for backward compatibility
+import { FaExpand, FaChevronDown} from "react-icons/fa"; //from https://react-icons.github.io/react-icons/
+import { FaFilePdf } from "react-icons/fa6"; //from https://react-icons.github.io/react-icons/
+import Modal from 'react-modal'; // from https://reactcommunity.org/react-modal/
 
 const NotesList = () => {
     const myParams = useParams();
@@ -13,6 +16,7 @@ const NotesList = () => {
     const [noteAddMessage, setNoteAddMessage] = useState('No note added yet.');
     const [myNotes, setMyNotes] = useState([]);
     const [userEmail, setUserEmail] = useState('');
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
         const fetchNotes = async () => {
@@ -148,6 +152,19 @@ const NotesList = () => {
             setMyNotes(old_notes);
         }
     };
+    const openModal = () => {
+      setModalIsOpen(true);
+    };
+  
+    const closeModal = () => {
+      setModalIsOpen(false);
+    };
+
+    const handleExpandIconClick = (event) => {
+        // alert("hello");
+        // Example usage
+        openModal();
+    }
 
     let seenTitles = {};
 
@@ -186,10 +203,34 @@ const NotesList = () => {
                     <div id="left-container">
                         <div id="left-part-div">
                             <h1>Upload new note </h1>
-                            <p id="files-accepted">Accepts: .pdf</p>
+                            <p id="files-accepted">
+                                Accepts: <FaFilePdf className="pdf-file-icon"/>
+                            </p>
                             <input type="file" onChange={handleFileUpload}/>
 
                             <h1>OR</h1>
+                            <FaExpand className="expand-icon" onClick={handleExpandIconClick}/>
+                            <Modal className="custom-modal" overlayClassName="custom-modal-overlay" isOpen={modalIsOpen} onRequestClose={closeModal}>
+                                <textarea 
+                                    id="modal-note-title" 
+                                    placeholder="Your note title."
+                                    value={noteTitle}
+                                    onChange={(e)=>{
+                                        setNoteTitle(e.target.value);
+                                    }}
+                                ></textarea>
+                                <textarea
+                                    id="modal-note-content"
+                                    placeholder="Your note content"
+                                    value={noteContent}
+                                    onChange={(e)=>{
+                                        setNoteContent(e.target.value)
+                                    }}
+                                >
+                                </textarea>
+                                <FaChevronDown className="down-close-icon" onClick={closeModal}/>
+                            </Modal>
+                            
                             <div id="paste-note-div">
                                 <textarea
                                     id="note-title"
@@ -199,7 +240,8 @@ const NotesList = () => {
                                         setNoteTitle(e.target.value);
                                     }}
                                 ></textarea>
-                                <textarea id="note-text"
+                                <textarea 
+                                    id="note-text"
                                     placeholder="Your note content."
                                     value={noteContent}
                                     onChange={(e) => {

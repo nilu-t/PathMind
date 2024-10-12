@@ -5,7 +5,9 @@ import firebase from 'firebase/compat/app'; // for backward compatibility
 import 'firebase/compat/auth'; // for backward compatibility
 import { FaExpand, FaChevronDown} from "react-icons/fa"; //from https://react-icons.github.io/react-icons/
 import { FaFilePdf } from "react-icons/fa6"; //from https://react-icons.github.io/react-icons/
+import { VscRunAll } from "react-icons/vsc"; //from https://react-icons.github.io/react-icons/
 import Modal from 'react-modal'; // from https://reactcommunity.org/react-modal/
+import CodeEditor from "../code-editor-components/CodeEditor";
 
 const NotesList = () => {
     const myParams = useParams();
@@ -260,13 +262,15 @@ const NotesList = () => {
                     <div id="right-part-div">
                         <div id="code-snippet-div">
                             <h1>Code Snippet (Optional)</h1>
-                            <textarea
+                            {/* <textarea
                                 placeholder="Got code? Place it here before submitting."
                                 value={codeContent}
                                 onChange={(e) => {
                                     setCodeContent(e.target.value);
                                 }}
-                            ></textarea>
+                            ></textarea> */}
+                            <CodeEditor codingLanguage={myParams.subject}/>
+
                         </div>
                     </div>
                 </div>

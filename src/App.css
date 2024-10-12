@@ -460,6 +460,12 @@ body {
   cursor: pointer;
 }
 
+#view-notes-div{
+  /* Set a maximum height and vertical scrolling when notes start to overflow*/
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
 #notes-list-div #title {
   font-size: 60px;
   font-weight: 500;
@@ -535,7 +541,7 @@ body {
 #notes-list-div #right-part-div #code-snippet-div {
   width: 80%;
   height: 80%;
-  background-color: #2c3e5058;
+  background-color: #0000006b;
   border-radius: 25px;
 }
 
@@ -777,4 +783,12 @@ body {
 
 #community-div{
   
+}
+
+
+/**
+--------------------- CODE EDITOR PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+.code-editor{
+  margin: 10px;
 }

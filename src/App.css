@@ -35,31 +35,31 @@ body {
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for more depth */
 }
 
-/* Animation for the title on page load */
+/*👉➡ Animation for the title on page load ⬅
 @keyframes titleAnimation {
   0% {
-    transform: rotateY(0deg); /* Initial state */
-    color: #00bcd4; /* Initial color */
+    transform: rotateY(0deg); ➡ Initial state ⬅
+    color: #00bcd4; ➡ Initial color ⬅
   }
   25% {
-    transform: rotateY(360deg); /* Rotate at 25% of the animation */
-    color: #ff4081; /* Change color at 25% of the animation */
+    transform: rotateY(360deg); ➡ Rotate at 25% of the animation ⬅
+    color: #ff4081; ➡ Change color at 25% of the animation ⬅
   }
   75% {
-    transform: rotateY(360deg); /* Rotate at 75% of the animation */
-    color: #ff4081; /* Change color at 75% of the animation */
+    transform: rotateY(360deg); ➡ Rotate at 75% of the animation ⬅
+    color: #ff4081; ➡ Change color at 75% of the animation ⬅
   }
   100% {
-    transform: rotateY(0deg); /* Final state */
-    color: #00bcd4; /* Final color (blue) */
+    transform: rotateY(0deg); ➡ Final state ⬅
+    color: #00bcd4; ➡ Final color (blue) ⬅
   }
 }
 
-/* Apply the animation only on page load */
+➡ Apply the animation only on page load ⬅
 .app-title {
-  animation: titleAnimation 5s linear forwards; /* Apply animation with a 5s duration */
+  animation: titleAnimation 5s linear forwards; ➡ Apply animation with a 5s duration ⬅
 }
-
+👈*/
 
 /**
 --------------------- NAVIGATION BAR SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -336,15 +336,17 @@ body {
 
 #note-description-div{
   border: 3px solid whitesmoke;
-  width: 90vw;
-  height: auto;
+/*👉  height: auto;
+  width: 90vh;👈*/
+  height: 90vh; /* The code editor will inherit this height */
+  overflow-y: auto; /* To enable scrolling inside the note div */
+  width: 90vh;
   padding: 30px;
   margin-bottom: 50px;
   font-size: 30px;  
   font-weight: bold; 
   letter-spacing: 1px; 
   line-height: 1.4; 
-
 }
 
 #note-div #note-content-div {
@@ -541,7 +543,7 @@ body {
 #notes-list-div #right-part-div #code-snippet-div {
   width: 80%;
   height: 80%;
-  background-color: #0000006b;
+  background-color: #121212b8;
   border-radius: 25px;
 }
 

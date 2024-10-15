@@ -1,18 +1,19 @@
 import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import firebase from 'firebase/compat/app'; // for backward compatibility
 import 'firebase/compat/auth'; // for backward compatibility
 import { FaExpand, FaChevronDown} from "react-icons/fa"; //from https://react-icons.github.io/react-icons/
 import { FaFilePdf } from "react-icons/fa6"; //from https://react-icons.github.io/react-icons/
 import { VscRunAll } from "react-icons/vsc"; //from https://react-icons.github.io/react-icons/
-import Modal from 'react-modal'; // from https://reactcommunity.org/react-modal/
 import CodeEditor from "../code-editor-components/CodeEditor";
+import NoteModal from "../modal-components/NoteModal";
 
 const NotesList = () => {
     const myParams = useParams();
+    const codeEditorRef = useRef(null);
+
     const [noteContent, setNoteContent] = useState('');
-    const [codeContent, setCodeContent] = useState('');
     const [noteTitle, setNoteTitle] = useState('');
     const [numSubmitted, setNumSubmitted] = useState(0);
     const [noteAddMessage, setNoteAddMessage] = useState('No note added yet.');
@@ -64,7 +65,8 @@ const NotesList = () => {
     };
 
     const handleOptimizeButtonClick = async() =>{
-        let enhanced_note = await sendGetRequest(`http://localhost:8000/enhance_note?noteContent=${encodeURIComponent(noteContent)}&codeContent=${encodeURIComponent(codeContent)}&noteSubject=${myParams.subject}`);
+        const codeSnippet = codeEditorRef.current.getCodeSnippet(); // Directly get the code from the editor
+        let enhanced_note = await sendGetRequest(`http://localhost:8000/enhance_note?noteContent=${encodeURIComponent(noteContent)}&codeContent=${encodeURIComponent(codeSnippet)}&noteSubject=${myParams.subject}`);
         setNoteContent(enhanced_note);
     }
 
@@ -112,10 +114,11 @@ const NotesList = () => {
         setMyNotes(new_notes);
     }
 
-
     const handleSubmitButtonClick = async() => {
         incrementNumSubmitted();
 
+        const codeSnippet = codeEditorRef.current.getCodeSnippet(); // Directly get the code from the editor
+        
         if (noteContent.trim() === '') {
             if(numSubmitted === 1){
                 setNoteAddMessage("What kind of note is empty? 🤨");
@@ -126,7 +129,6 @@ const NotesList = () => {
             else if (numSubmitted >= 3){
                 setNoteAddMessage("Do you think I am a joke? 😔");
             }
-
             return;
 
         } else {
@@ -137,7 +139,7 @@ const NotesList = () => {
             const data = {
                 noteTitle: noteTitle,
                 noteContent: encodeURIComponent(noteContent),
-                codeContent: encodeURIComponent(codeContent),
+                codeContent: encodeURIComponent(codeSnippet),
                 userEmail: userEmail,
                 subject: myParams.subject
             };
@@ -147,7 +149,6 @@ const NotesList = () => {
             if(addNoteResponse === "User not found!"){
                 alert("Please sign-up or sign-in to PathMind before adding any notes!");
             }
-
 
             //After successfully adding the note, update the state to show that adding the new note worked.
             let old_notes = await sendGetRequest(`http://localhost:8000/get_notes/${myParams.subject}?email=${userEmail}`);
@@ -161,6 +162,14 @@ const NotesList = () => {
     const closeModal = () => {
       setModalIsOpen(false);
     };
+
+    const noteTitleCallback = (event) =>{
+        setNoteTitle(event.target.value);
+    }
+
+    const noteContentCallback = (event) =>{
+        setNoteContent(event.target.value);
+    }
 
     const handleExpandIconClick = (event) => {
         // alert("hello");
@@ -209,46 +218,30 @@ const NotesList = () => {
                                 Accepts: <FaFilePdf className="pdf-file-icon"/>
                             </p>
                             <input type="file" onChange={handleFileUpload}/>
-
+                            
                             <h1>OR</h1>
                             <FaExpand className="expand-icon" onClick={handleExpandIconClick}/>
-                            <Modal className="custom-modal" overlayClassName="custom-modal-overlay" isOpen={modalIsOpen} onRequestClose={closeModal}>
-                                <textarea 
-                                    id="modal-note-title" 
-                                    placeholder="Your note title."
-                                    value={noteTitle}
-                                    onChange={(e)=>{
-                                        setNoteTitle(e.target.value);
-                                    }}
-                                ></textarea>
-                                <textarea
-                                    id="modal-note-content"
-                                    placeholder="Your note content"
-                                    value={noteContent}
-                                    onChange={(e)=>{
-                                        setNoteContent(e.target.value)
-                                    }}
-                                >
-                                </textarea>
-                                <FaChevronDown className="down-close-icon" onClick={closeModal}/>
-                            </Modal>
+                            <NoteModal 
+                                modalIsOpen={modalIsOpen} 
+                                closeModal={closeModal} 
+                                noteTitle={noteTitle} 
+                                noteContent={noteContent} 
+                                noteContentCallback={noteContentCallback}
+                                noteTitleCallback={noteTitleCallback}
+                            />
                             
                             <div id="paste-note-div">
                                 <textarea
                                     id="note-title"
                                     placeholder="Your note title."
                                     value={noteTitle}
-                                    onChange={(e) => {
-                                        setNoteTitle(e.target.value);
-                                    }}
+                                    onChange={noteTitleCallback}
                                 ></textarea>
                                 <textarea 
                                     id="note-text"
                                     placeholder="Your note content."
                                     value={noteContent}
-                                    onChange={(e) => {
-                                        setNoteContent(e.target.value);
-                                    }}
+                                    onChange={noteContentCallback}
                                 ></textarea>
                             </div>
                         </div>
@@ -262,15 +255,7 @@ const NotesList = () => {
                     <div id="right-part-div">
                         <div id="code-snippet-div">
                             <h1>Code Snippet (Optional)</h1>
-                            {/* <textarea
-                                placeholder="Got code? Place it here before submitting."
-                                value={codeContent}
-                                onChange={(e) => {
-                                    setCodeContent(e.target.value);
-                                }}
-                            ></textarea> */}
-                            <CodeEditor codingLanguage={myParams.subject}/>
-
+                            <CodeEditor codingLanguage={myParams.subject} ref={codeEditorRef}/>
                         </div>
                     </div>
                 </div>

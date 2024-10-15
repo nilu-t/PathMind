@@ -1,149 +1,54 @@
 
 import Editor from '@monaco-editor/react' //from https://www.npmjs.com/package/@monaco-editor/react
+import { files } from './codeEditorConstants';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+
 /**
  * The monaco code editor will take up 100% of the width and height of the container element. 
  * Since this CodeEditor component will be inside the code-snippet-div we can just return the editor with the height as inherit and width as auto.
- * 
  */
 
-const sayings = [
-    "Write some clean code here!",
-    "Write some neat code here!",
-    "Let's get those functions flowing!",
-    "Draft your next big idea here!",
-    "Build something cool right here!",
-    "Time to make the code shine!",
-    "Put your logic to the test!",
-    "Sketch out some solid code!",
-    "Get those algorithms in motion!"
-];  
-
-const getRandomSaying = () =>{
-    let randomIndex = Math.floor(Math.random() * sayings.length); //random index, Math.random() generates a number between 0 to 1, we multiply that by length of the array and floor the value for the random index.
-
-    return sayings[randomIndex];
-}
-
-const files = { //an object of objects. i.e, file[file_name] => returns file name, default language, default value => that we can pass to the editor
-    "html":{
-        name: "index.html",
-        defaultLanguage: "html",
-        value: `<h1>${getRandomSaying()}</h1>`
-    },
-    "css":{
-        name: "app.css",
-        defaultLanguage: "css",
-        value: `/* ${getRandomSaying()} */`
-    },
-    "go":{
-        name: "go_script.go",
-        defaultLanguage: "go",
-        value: `//${getRandomSaying()}`
-    },
-    "ruby":{
-        name: "ruby_script.rb",
-        defaultLanguage: "ruby",
-        value: `//${getRandomSaying()}`
-    },
-    "ruby on rails":{
-        name: "ruby_on_rails_script.rb",
-        defaultLanguage: "ruby",
-        value: `//${getRandomSaying()}`
-    },
-    "javascript":{
-        name: "vanilla_script.js",
-        defaultLanguage: "javascript",
-        value: `//${getRandomSaying()}`
-    },
-    "react":{
-        name: "react_component.js",
-        defaultLanguage: "javascript",
-        value: `//${getRandomSaying()}`
-    },
-    "node.js":{
-        name: "node_script.js",
-        defaultLanguage: "javascript",
-        value: `//${getRandomSaying()}`
-    },
-    "vue":{
-        name: "vue_script.js",
-        defaultLanguage: "javascript",
-        value: `//${getRandomSaying()}`
-    },
-    "java":{
-        name: "script.kt",
-        defaultLanguage: "kotlin",
-        value: `//${getRandomSaying()}`
-    },
-    "kotlin":{
-        name: "script.java",
-        defaultLanguage: "java",
-        value: `//${getRandomSaying()}`
-    },
-    "rust":{
-        name: "script.rs",
-        defaultLanguage: "rust",
-        value: `//${getRandomSaying()}`
-    },
-    "python":{
-        name: "script.py",
-        defaultLanguage: "python",
-        value: `#${getRandomSaying()}`
-    }, 
-    "tensorflow":{
-        name: "tensorflow_script.py",
-        defaultLanguage: "python",
-        value: `#${getRandomSaying()}`
-    }, 
-    "scikit-learn":{
-        name: "scikit_learn_script.py",
-        defaultLanguage: "python",
-        value: `#${getRandomSaying()}`
-    }, 
-    "c++":{
-        name: "cpp_script.cpp",
-        defaultLanguage: "cpp",
-        value: `//${getRandomSaying()}`
-    }, 
-    "c sharp":{
-        name: "script.cs",
-        defaultLanguage: "csharp",
-        value: `//${getRandomSaying()}`
-    }, 
-    "unity":{
-        name: "unity_script.cs",
-        defaultLanguage: "csharp",
-        value: `//${getRandomSaying()}`
-    }, 
-    "r":{
-        name: "script.R",
-        defaultLanguage: "R",
-        value: `#${getRandomSaying()}`
-    }, 
-    "aws":{
-        name: "aws_python_script.py",
-        defaultLanguage: "python",
-        value: `#${getRandomSaying()}`
-    }, 
-    "google cloud":{
-        name: "gc_python_script.py",
-        defaultLanguage: "python",
-        value: `#${getRandomSaying()}`
-    }, 
-
-}
-
-const CodeEditor = ({codingLanguage}) =>{
-
+const CodeEditor = forwardRef( ({codingLanguage, defaultContent=""}, ref) =>{
+    let monacoRef = useRef(null); 
     let file = files[codingLanguage.toLowerCase()];
     let name = file.name;
     let defaultLanguage = file.defaultLanguage;
     let value = file.value;
 
+    if(defaultContent != ""){
+        value = defaultContent; //if defaultContent is provided we can just use that as the code inside the code editor. 
+    }
+
+    const handleEditorDidMount = (editor, monaco) =>{
+        /**
+         * This function is triggered after the monaco editor mounts to store the monaco instance. 
+         */
+
+        monacoRef.current = editor;
+    }
+
+    useImperativeHandle(ref, ()=> ({
+        /**
+         * This function returns the code inside the code editor.
+         */
+        getCodeSnippet:() =>{
+            return monacoRef.current.getValue();
+        }
+    }))
+    
     return(
-        <Editor className="code-editor" height="inherit" width="auto" theme="vs-dark" defaultLanguage={defaultLanguage} defaultValue={value} path={name} />
+        <Editor 
+            className="code-editor" 
+            height="inherit" 
+            width="auto" 
+            theme="vs-dark" 
+            defaultLanguage={defaultLanguage} 
+            defaultValue={value} 
+            path={name} 
+            onMount={handleEditorDidMount}
+        />
     );
 
-}
+});
 
 export default CodeEditor;

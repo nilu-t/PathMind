@@ -1,8 +1,11 @@
-import { BsTypeH1 } from "react-icons/bs";
-import { BsTypeH2 } from "react-icons/bs";
-import { BsTypeH3 } from "react-icons/bs";
-import { BsTypeBold } from "react-icons/bs";
-import { BsTypeItalic } from "react-icons/bs";
+
+
+import { BsTypeH1, BsTypeH2, BsTypeH3, BsTypeBold, BsTypeItalic, BsListUl ,
+    BsTypeUnderline, BsListOl, BsQuote, BsTypeStrikethrough, BsTextLeft,
+    BsTextCenter, BsTextRight, BsLink, BsCardImage
+} from "react-icons/bs";
+
+import { FaUndo, FaRedo } from "react-icons/fa";
 
 export const lexical_tool_commands = {
     "h1": {
@@ -19,6 +22,43 @@ export const lexical_tool_commands = {
     },
     "italics": {
         icon: <BsTypeItalic/>
+    },
+    "bullets-list": {
+        icon: <BsListUl/>
+    },
+    "numbers-list":{
+        icon: <BsListOl/>
+    },
+    "underline": {
+        icon: <BsTypeUnderline/>
+    },
+    "undo":{
+        icon: <FaUndo/>
+    },
+    "redo":{
+        icon: <FaRedo/>
+    },
+    "quote":{
+        icon: <BsQuote/>
+    },
+    "strikethrough":{
+        icon: <BsTypeStrikethrough/>
+    },
+    "align-left":{
+        icon: <BsTextLeft/>
+    },
+    "align-center":{
+        icon: <BsTextCenter/>
+    },
+    "align-right":{
+        icon: <BsTextRight/>
+    },
+    "insert-link":{
+        icon: <BsLink/>
+    },
+    "insert-image":{
+        icon: <BsCardImage/>
     }
+
 }
 

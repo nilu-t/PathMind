@@ -27,7 +27,7 @@ function onError(error) {
 
 function Editor() {
   const initialConfig = {
-    namespace: 'MyEditor',
+    namespace: 'PathMind Text Editor',
     theme,
     onError,
   };

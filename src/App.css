@@ -324,12 +324,10 @@ body {
   list-style: none;
 }
 
-
-
-
 /**
 --------------------- NOTE PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
+
 #note-description-div p{
   white-space: pre-wrap; 
 }
@@ -340,19 +338,12 @@ body {
   width: 90vh;👈*/
   height: 90vh; /* The code editor will inherit this height */
   overflow-y: auto; /* To enable scrolling inside the note div */
-  width: 90vh;
-  padding: 30px;
+  width: 50vw;
+  padding: 3rem;
   margin-bottom: 50px;
   font-size: 30px;  
   font-weight: bold; 
   letter-spacing: 1px; 
-  line-height: 1.4; 
-}
-
-#note-div #note-content-div {
-  font-weight: bold;  
-  color: #2C3E50;  
-  letter-spacing: 1px;  
   line-height: 1.4; 
 }
 
@@ -789,8 +780,24 @@ body {
 
 
 /**
---------------------- CODE EDITOR PAGE SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------- CODE EDITOR COMPONTENT SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 .code-editor{
   margin: 10px;
+}
+
+
+/**
+--------------------- LEXICAL COMPONENT SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+.tool-icons{
+  padding: 10px;
+  margin: 2px;
+  border: 1px solid black;
+  border-radius: 5px;
+
+}
+
+.tool-icons:hover{
+  cursor: pointer;
 }

@@ -8,6 +8,7 @@ import { FaFilePdf } from "react-icons/fa6"; //from https://react-icons.github.i
 import { VscRunAll } from "react-icons/vsc"; //from https://react-icons.github.io/react-icons/
 import CodeEditor from "../code-editor-components/CodeEditor";
 import NoteModal from "../modal-components/NoteModal";
+import Editor from "../lexical-editor-components/EditorWrapper";
 
 const NotesList = () => {
     const myParams = useParams();
@@ -218,7 +219,7 @@ const NotesList = () => {
                                 Accepts: <FaFilePdf className="pdf-file-icon"/>
                             </p>
                             <input type="file" onChange={handleFileUpload}/>
-                            
+
                             <h1>OR</h1>
                             <FaExpand className="expand-icon" onClick={handleExpandIconClick}/>
                             <NoteModal 
@@ -237,12 +238,13 @@ const NotesList = () => {
                                     value={noteTitle}
                                     onChange={noteTitleCallback}
                                 ></textarea>
-                                <textarea 
+                                <Editor/>
+                                {/* <textarea 
                                     id="note-text"
                                     placeholder="Your note content."
                                     value={noteContent}
                                     onChange={noteContentCallback}
-                                ></textarea>
+                                ></textarea> */}
                             </div>
                         </div>
                         <div id="submit-div">

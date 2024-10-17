@@ -5,7 +5,6 @@ import firebase from 'firebase/compat/app'; // for backward compatibility
 import 'firebase/compat/auth'; // for backward compatibility
 import { FaExpand, FaChevronDown} from "react-icons/fa"; //from https://react-icons.github.io/react-icons/
 import { FaFilePdf } from "react-icons/fa6"; //from https://react-icons.github.io/react-icons/
-import { VscRunAll } from "react-icons/vsc"; //from https://react-icons.github.io/react-icons/
 import CodeEditor from "../code-editor-components/CodeEditor";
 import NoteModal from "../modal-components/NoteModal";
 import Editor from "../lexical-editor-components/EditorWrapper";

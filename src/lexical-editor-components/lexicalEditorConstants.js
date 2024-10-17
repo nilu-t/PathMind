@@ -2,7 +2,7 @@
 
 import { BsTypeH1, BsTypeH2, BsTypeH3, BsTypeBold, BsTypeItalic, BsListUl ,
     BsTypeUnderline, BsListOl, BsQuote, BsTypeStrikethrough, BsTextLeft,
-    BsTextCenter, BsTextRight, BsLink, BsCardImage
+    BsTextCenter, BsTextRight, BsLink, BsCardImage, BsCardChecklist,
 } from "react-icons/bs";
 
 import { FaUndo, FaRedo } from "react-icons/fa";

@@ -6,6 +6,15 @@ body {
   color: #E1E1E1;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 /* Gradient animation */
@@ -485,17 +494,25 @@ body {
   
 }
 
+#submit-div{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+
+}
+
 #notes-list-div #left-container button{
-  margin-top: 30px;
-  padding: 10px 30px;
-  font-size: 1.5rem;
+  height: 35px;
+  margin-top: 10px;
+  font-size: 1rem;
   border: 1px solid whitesmoke;
-  border-radius: 15px;
+  border-radius: 10px;
   background-color: #ECF0F1;
   cursor: pointer;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease 0s;
-  margin-right: 50px;
 }
 
 #notes-list-div #left-container button:hover {
@@ -525,17 +542,22 @@ body {
 #notes-list-div #right-part-div {
   flex: 2;
   text-align: center;
-  height: 80%;
-  display: flex;
+/*👉  height: 100%;
+👈*/  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 #notes-list-div #right-part-div #code-snippet-div {
-  width: 80%;
-  height: 80%;
+  width: 90%;
+  height: 100%;
+  overflow-y: auto;
   background-color: #121212b8;
   border-radius: 25px;
+}
+
+#code-snippet-div h1{
+  padding: 15px;
 }
 
 #notes-list-div #right-part-div textarea,
@@ -786,17 +808,68 @@ body {
   margin: 10px;
 }
 
+.code-editor-container {
+  width: auto;
+  height: 75%;
+  margin: 10px;
+}
+
+.run-code-button{
+  position: relative;
+  bottom: 75%; /* the height of the code editor container */
+  left: 50%;
+  transform: translate(-100%, -100%); /* translation relative to the buttons own size. */
+  color: whitesmoke;
+
+  background-color: rgba(0, 94, 255, 0.952);
+  border: 1px solid rgb(0, 25, 68);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.run-code-button:hover{
+  cursor: pointer;
+}
+
+/*👉.code-editor-output{
+  width: 10px;
+  height: 10px;
+}👈*/
+
 
 /**
 --------------------- LEXICAL COMPONENT SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+.lexical-editor {
+}
+
+.content-editable-area p {
+  white-space: pre-wrap; /* This ensures that new line characters are respected */
+  word-wrap: break-word;  /* Proper word wrapping */
+  overflow-y: auto; /* Scroll only when overflowing vertically */
+  min-height: 100px; /* The initial paragraph will be this height but allows to be flexible and continue growing. */
+  margin: 0px;
+}
+
+.content-editable-area {
+  border: 2px solid  rgba(0, 25, 68, 0.287);
+  border-radius: 5px;
+  overflow-y: auto; /* Scroll only when overflowing vertically */
+  max-height: 200px; /* Set a fixed height (adjust based on your layout) */
+  margin: 10px;
+}
+
+
+/**
+--------------------- TOOLBAR COMPONENT SPECIFIC STYLING ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 .tool-icons{
   display: inline-block;
   padding: 10px;
   margin: 2px;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 25, 68, 0.179);
   border-radius: 5px;
-
+  background-color: rgba(0, 94, 255, 0.269);
 }
 
 .tool-icons:hover{

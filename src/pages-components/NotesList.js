@@ -12,8 +12,9 @@ import Editor from "../lexical-editor-components/EditorWrapper";
 const NotesList = () => {
     const myParams = useParams();
     const codeEditorRef = useRef(null);
+    const lexicalEditorRef = useRef(null);
+    const modalLexicalEditorRef = useRef(null);
 
-    const [noteContent, setNoteContent] = useState('');
     const [noteTitle, setNoteTitle] = useState('');
     const [numSubmitted, setNumSubmitted] = useState(0);
     const [noteAddMessage, setNoteAddMessage] = useState('No note added yet.');
@@ -65,9 +66,9 @@ const NotesList = () => {
     };
 
     const handleOptimizeButtonClick = async() =>{
-        const codeSnippet = codeEditorRef.current.getCodeSnippet(); // Directly get the code from the editor
-        let enhanced_note = await sendGetRequest(`http://localhost:8000/enhance_note?noteContent=${encodeURIComponent(noteContent)}&codeContent=${encodeURIComponent(codeSnippet)}&noteSubject=${myParams.subject}`);
-        setNoteContent(enhanced_note);
+        // const codeSnippet = codeEditorRef.current.getCodeSnippet(); // Directly get the code from the editor
+        // let enhanced_note = await sendGetRequest(`http://localhost:8000/enhance_note?noteContent=${encodeURIComponent(noteContent)}&codeContent=${encodeURIComponent(codeSnippet)}&noteSubject=${myParams.subject}`);
+        // setNoteContent(enhanced_note);
     }
 
     const handleFileUpload = async(event) =>{
@@ -90,7 +91,8 @@ const NotesList = () => {
             }
 
             let fileContent = await sendPostRequest('http://localhost:8000/upload_note', formData, config);
-            setNoteContent(fileContent.content); //update the note content to display the parsed PDF file.
+            lexicalEditorRef.current.setNoteContent(fileContent.content);
+            // setNoteContent(fileContent.content); //update the note content to display the parsed PDF file.
             setNoteTitle(fileContent.name); //update the note title of the PDF file. 
         }
         else{
@@ -117,7 +119,9 @@ const NotesList = () => {
     const handleSubmitButtonClick = async() => {
         incrementNumSubmitted();
 
-        const codeSnippet = codeEditorRef.current.getCodeSnippet(); // Directly get the code from the editor
+        const codeSnippet = codeEditorRef.current.getCodeSnippet(); // Directly get the code from the code editor. 
+
+        const noteContent = lexicalEditorRef.current.getNoteContent(); //Directly get the note from the lexical editor. 
         
         if (noteContent.trim() === '') {
             if(numSubmitted === 1){
@@ -163,18 +167,12 @@ const NotesList = () => {
       setModalIsOpen(false);
     };
 
-    const noteTitleCallback = (event) =>{
-        setNoteTitle(event.target.value);
-    }
-
-    const noteContentCallback = (event) =>{
-        setNoteContent(event.target.value);
-    }
-
     const handleExpandIconClick = (event) => {
         // alert("hello");
         // Example usage
         openModal();
+
+        // lexicalEditorRef.current.setNoteContent(lexicalEditorRef.current.getNoteContent())
     }
 
     let seenTitles = {};
@@ -224,30 +222,23 @@ const NotesList = () => {
                             <NoteModal 
                                 modalIsOpen={modalIsOpen} 
                                 closeModal={closeModal} 
-                                noteTitle={noteTitle} 
-                                noteContent={noteContent} 
-                                noteContentCallback={noteContentCallback}
-                                noteTitleCallback={noteTitleCallback}
+                                lexicalEditorRef={lexicalEditorRef}
+                                modalLexicalEditorRef={modalLexicalEditorRef}
                             />
                             
                             <div id="paste-note-div">
                                 <textarea
                                     id="note-title"
-                                    placeholder="Your note title."
-                                    value={noteTitle}
-                                    onChange={noteTitleCallback}
+                                    placeholder="Your note title."        
+                                    value={noteTitle}     
+                                    onChange={(e)=>{setNoteTitle(e.target.value)}}                       
                                 ></textarea>
-                                <Editor/>
-                                {/* <textarea 
-                                    id="note-text"
-                                    placeholder="Your note content."
-                                    value={noteContent}
-                                    onChange={noteContentCallback}
-                                ></textarea> */}
+                                <Editor ref={lexicalEditorRef}/>
                             </div>
                         </div>
                         <div id="submit-div">
-                            <button onClick={handleOptimizeButtonClick}>Optimize</button>
+                            <button>Format Note</button>
+                            <button onClick={handleOptimizeButtonClick}>Optimize Note</button>
                             <button onClick={handleSubmitButtonClick}>Submit</button>
                             {<p>{noteAddMessage}</p>}
                         </div>

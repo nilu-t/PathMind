@@ -3,7 +3,7 @@
  */
 
 import {$getRoot, $getSelection} from 'lexical';
-import {useEffect} from 'react';
+import {useEffect, forwardRef} from 'react';
 
 import {AutoFocusPlugin} from '@lexical/react/LexicalAutoFocusPlugin';
 import {LexicalComposer} from '@lexical/react/LexicalComposer';
@@ -18,7 +18,7 @@ import { TableNode, TableCellNode, TableRowNode } from "@lexical/table";
 import {ListPlugin} from '@lexical/react/LexicalListPlugin';
 import {ListNode, ListItemNode} from '@lexical/list';
 
-import Toolbar from './Toolbar';
+import EditorCommandPanel from './EditorCommandPanel';
 
 const theme = {
   // Theme styling goes here
@@ -32,8 +32,7 @@ function onError(error) {
   console.error(error);
 }
 
-
-function Editor() {
+const Editor = forwardRef((props, ref) => {
 
   const initialConfig = {
     namespace: 'PathMind Text Editor',
@@ -58,9 +57,9 @@ function Editor() {
   };
 
   return (
-    <div className="lexical-editor">
+    <div className={props.className}>
       <LexicalComposer initialConfig={initialConfig}>
-        <Toolbar />
+        <EditorCommandPanel ref={ref}/>
         <RichTextPlugin
           contentEditable={<ContentEditable className="content-editable-area" />}
           placeholder={<div>Enter some text...</div>}
@@ -72,6 +71,6 @@ function Editor() {
       </LexicalComposer>
     </div>
   );
-}
+})
 
 export default Editor;

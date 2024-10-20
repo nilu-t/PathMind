@@ -1,30 +1,50 @@
+import Modal from 'react-modal';
+import { FaChevronDown } from "react-icons/fa";
+import Editor from '../lexical-editor-components/EditorWrapper';
+import { useEffect, useState } from 'react';
 
-import Modal from 'react-modal'; // from https://reactcommunity.org/react-modal/
-import {FaChevronDown} from "react-icons/fa"; //from https://react-icons.github.io/react-icons/
+const NoteModal = ({ modalIsOpen, closeModal, lexicalEditorRef, modalLexicalEditorRef }) => {
 
-const NoteModal = ({modalIsOpen, closeModal, noteTitle, noteContent, noteTitleCallback, noteContentCallback}) =>{
-    /**
-     * This note modal will be a controlled component to manage the users note title and note content.
-     */
+    // This will be called after the modal has opened and is ready (fully rendered).
+    const handleAfterOpen = () => {
+        if (modalLexicalEditorRef.current && lexicalEditorRef.current) {
+            // Get the editor state from the main editor. 
+            const editorState = lexicalEditorRef.current.getEditorStateJSON(); // Serialize the state to JSON
+            // Set the modal editor's state. 
+            modalLexicalEditorRef.current.setEditorStateFromJSON(editorState); // Deserialize into modal editor
+        }
+    };
 
-    return(
-        <Modal className="custom-modal" overlayClassName="custom-modal-overlay" isOpen={modalIsOpen} onRequestClose={closeModal}>
-            <textarea 
-                id="modal-note-title"
-                placeholder="Your note title."
-                value={noteTitle}
-                onChange={noteTitleCallback}
-            ></textarea>
-            <textarea
-                id="modal-note-content"
-                placeholder="Your note content"
-                value={noteContent}
-                onChange={noteContentCallback}
-            >
-            </textarea>
-            <FaChevronDown className="down-close-icon" onClick={closeModal}/>
+    // This will be called just before the modal closes
+    const handleBeforeClose = () => {
+        if (modalLexicalEditorRef.current && lexicalEditorRef.current) {
+            // Get the editor state from the modal editor. 
+            const modalEditorState = modalLexicalEditorRef.current.getEditorStateJSON();  // Serialize the state to JSON
+            // Update the main editor with the modal editor's state. 
+            lexicalEditorRef.current.setEditorStateFromJSON(modalEditorState); // Deserialize into main editor
+        }
+    };
+
+    return (
+        <Modal
+            className="custom-modal"
+            overlayClassName="custom-modal-overlay"
+            isOpen={modalIsOpen}
+            onRequestClose={() => {
+                handleBeforeClose();
+                closeModal();
+            }}
+            onAfterOpen={handleAfterOpen}
+            ariaHideApp={false}
+        >
+            {/* Render the Lexical editor, with ref forwarded */}
+            <Editor className="modal-lexical-editor" ref={modalLexicalEditorRef} />
+            <FaChevronDown className="down-close-icon" onClick={() => {
+                handleBeforeClose();
+                closeModal();
+            }} />
         </Modal>
     );
-}
+};
 
 export default NoteModal;

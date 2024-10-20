@@ -1,14 +1,14 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { lexical_tool_commands } from './lexicalEditorConstants';
-import { FORMAT_TEXT_COMMAND, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, UNDO_COMMAND, KEY_ENTER_COMMAND, COMMAND_PRIORITY_LOW} from "lexical"
+import { FORMAT_TEXT_COMMAND, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, UNDO_COMMAND, KEY_ENTER_COMMAND, COMMAND_PRIORITY_LOW, $createParagraphNode} from "lexical"
 import { INSERT_UNORDERED_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND, INSERT_CHECK_LIST_COMMAND } from '@lexical/list'
 
-import {$getSelection, $createTextNode} from 'lexical';
+import {$getSelection, $createTextNode, $getRoot} from 'lexical';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
 
 
-const Toolbar = () => {
+const EditorCommandPanel = forwardRef((props, ref) => {
     /**
      * This is the toolbar component for the lexical editor. 
      * Docs on registering new editor commands: https://lexical.dev/docs/concepts/commands#editorregistercommand
@@ -81,8 +81,53 @@ const Toolbar = () => {
     useEffect(() =>{
         const icons = Object.keys(lexical_tool_commands).map(key => [key, lexical_tool_commands[key].icon]); // each item in icons array will be a array with the list [tool name, tool icon component]  
         setToolIcons(icons);
+
     }, []);
 
+    useImperativeHandle(ref, () => ({
+        getNoteContent: () => {
+            let noteContent = "";
+            editor.read(() => {
+                // Get the root node and convert the entire editor state to text content.
+                const root = $getRoot();
+
+                if(root){
+                    noteContent = root.getTextContent(); // Retrieve content from the root
+                }
+
+            });
+            return noteContent;
+        },
+        setNoteContent: (noteContent) =>{
+            editor.update(()=>{
+                const root = $getRoot();
+
+                if(root){
+                    root.clear(); //clear any text in the editor.
+
+                    const paragraphNode = $createParagraphNode();
+                    const textNode = $createTextNode(noteContent);
+                    paragraphNode.append(textNode);
+                    root.append(paragraphNode);
+                }
+            })
+        },
+        getEditorStateJSON: () => {
+            let editorStateJSON = "";
+            editor.read(() => {
+                editorStateJSON = editor.getEditorState().toJSON(); // Convert state to JSON
+            });
+            return editorStateJSON;
+        },
+        setEditorStateFromJSON: (editorStateJSON) => {
+            editor.update(() => {
+                const editorState = editor.parseEditorState(editorStateJSON); // Parse JSON back to state
+                editor.setEditorState(editorState); // Set the editor state
+            });
+        }
+
+    }));
+    
     return (
         <div>
             {toolIcons.map( (item, index) => (
@@ -93,5 +138,6 @@ const Toolbar = () => {
         </div>
     );
 
-}
-export default Toolbar;
+})
+
+export default EditorCommandPanel;

@@ -1,13 +1,15 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import firebase from 'firebase/compat/app'; // for backward compatibility
 import 'firebase/compat/auth'; // for backward compatibility
 import { FaExpand, FaChevronDown} from "react-icons/fa"; //from https://react-icons.github.io/react-icons/
+import { MdDeleteForever } from "react-icons/md"; //from https://react-icons.github.io/react-icons/
 import { FaFilePdf } from "react-icons/fa6"; //from https://react-icons.github.io/react-icons/
 import CodeEditor from "../code-editor-components/CodeEditor";
 import NoteModal from "../modal-components/NoteModal";
 import Editor from "../lexical-editor-components/EditorWrapper";
+
+import { sendGetRequest, sendPostRequest } from "../api-tools/requests"; //helper functions for making GET and POST requests using axios.
 
 const NotesList = () => {
     const myParams = useParams();
@@ -38,31 +40,13 @@ const NotesList = () => {
         };
     
         fetchNotes();
+
+        // console.log(codeEditorRef.current.runCodeSnippet()); 
+
     }, [myParams.subject]);
     
     const incrementNumSubmitted = () => {
         setNumSubmitted(numSubmitted + 1);
-    };
-
-    const sendPostRequest = async(route_name, data, config={}) => {
-        try{
-            const response = await axios.post(route_name, data, config);
-            console.log(`response from post request is ${JSON.stringify(response.data, null, 2)}`);
-            return response.data
-        }
-        catch (error) {
-            console.log(`error from get request is ${error}`);
-        }
-    };
-
-    const sendGetRequest = async (route_name) => {
-        try {
-            const response = await axios.get(route_name);
-            console.log(`response from get request is ${JSON.stringify(response.data, null, 2)}`);
-            return response.data;
-        } catch (error) {
-            console.log(`error from get request is ${error}`);
-        }
     };
 
     const handleOptimizeButtonClick = async() =>{
@@ -194,11 +178,11 @@ const NotesList = () => {
             <Link to={`/Note/${noteObj.note_title}/${noteObj.id}`} key={noteObj.id}>
                 <p>
                     {noteObj.note_title} 
-                    <button onClick={(event) => {
+                    <button className="delete-icon-button" onClick={(event) => {
                         event.preventDefault(); // since we're deleting the note, prevent the default behavior which is redirecting to the note link 
                         event.stopPropagation();  //we're deleting the note, so we don't want to redirect to the note compontent. 
                         handleDeleteButtonClick(noteObj.note_title)
-                    }}>X</button>
+                    }}><MdDeleteForever className="delete-icon"/></button>
                 </p>
             </Link>
         );

@@ -10,7 +10,7 @@ import {
 
 } from "@lexical/rich-text";
 
-import {$getSelection, $createTextNode, $getRoot, $wrapNodes,} from 'lexical';
+import {$getSelection, $createTextNode, $getRoot, $wrapNodes,$isTextNode} from 'lexical';
 
 import { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
 
@@ -77,6 +77,44 @@ const EditorCommandPanel = forwardRef((props, ref) => {
         })
     }
 
+    const formatQuoteHelper = () => {
+        // editor.update(() => {
+        //     const selection = $getSelection();
+    
+        //     if (selection && $isRangeSelection(selection)) {
+        //         const nodes = selection.getNodes();
+        //         const quoteNode = $createQuoteNode();
+    
+        //         nodes.forEach((node) => {
+        //             // If it's a text node, clone its content to preserve the text inside the quote
+        //             if ($isTextNode(node)) {
+        //                 const clonedTextNode = node.clone();
+        //                 quoteNode.append(clonedTextNode);
+        //             } else {
+        //                 // Append any other node types directly
+        //                 quoteNode.append(node);
+        //             }
+        //         });
+    
+        //         // Replace the selected range with the new quoteNode
+        //         selection.insertNodes([quoteNode]);
+        //     }
+        // });
+    };
+
+    const formatUnderlineHelper = () =>{
+
+    }
+
+    const formatLinkHelper = () =>{
+
+    }
+
+    const uploadImageHelper = () =>{
+
+    }
+
+    
     const handleToolIconClick = (iconKeyName) =>{
         //the commands are found from: https://github.com/facebook/lexical/blob/main/packages/lexical/src/LexicalEvents.ts
         if(iconKeyName === "redo"){
@@ -112,6 +150,9 @@ const EditorCommandPanel = forwardRef((props, ref) => {
         else if(iconKeyName === "strikethrough"){
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough"); //need to fix this
         }        
+        else if(iconKeyName === "quote"){
+            formatQuoteHelper(iconKeyName);
+        }   
         else if(iconKeyName === "h1" || iconKeyName === "h2" || iconKeyName === "h3"){
             formatHeadingHelper(iconKeyName);
         }

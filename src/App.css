@@ -369,8 +369,8 @@ html {
   margin-left: 50vw;
   margin-top: 50vh;
   transform: translate(-50%, -50%);
-/*👉  border: 2px solid black;
-👈*/  border-radius: 10px;
+  border: 1px solid whitesmoke;
+  border-radius: 10px;
 }
 
 .custom-modal-overlay{
@@ -444,16 +444,14 @@ html {
   width: auto;
 }
 
-#notes-list-div #view-notes-div button{
+.delete-icon-button{
   background-color: transparent;
-  border:none;
-  border-radius: 25px;
+  border: none;
+}
+
+.delete-icon{
   color: red;
-  /* border-color: darkred; */
-  border-width: 1px;
-  padding: 2px 5px;
-  margin-left: 10px;
-  font-size: medium;
+  font-size: large;
 }
 
 #notes-list-div #view-notes-div button:hover{

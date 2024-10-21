@@ -51,11 +51,12 @@ const CodeEditor = forwardRef( ({codingLanguage, defaultContent=""}, ref) =>{
             <button className="run-code-button">
                 RUN <VscRunAll />
             </button>
-            {/* <textarea
+            <textarea
                 className='code-editor-output'
                 readOnly={true}
-                value="code output..."
-            ></textarea> */}
+                placeholder='Click on RUN button to see the output'
+                // value="code output..."
+            ></textarea>
         </div>
     );
 

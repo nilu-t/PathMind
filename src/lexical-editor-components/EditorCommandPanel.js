@@ -1,9 +1,16 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { lexical_tool_commands } from './lexicalEditorConstants';
-import { FORMAT_TEXT_COMMAND, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, UNDO_COMMAND, KEY_ENTER_COMMAND, COMMAND_PRIORITY_LOW, $createParagraphNode} from "lexical"
+import { FORMAT_TEXT_COMMAND, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, UNDO_COMMAND, KEY_ENTER_COMMAND, COMMAND_PRIORITY_LOW, $createParagraphNode, $isRangeSelection} from "lexical"
 import { INSERT_UNORDERED_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND, INSERT_CHECK_LIST_COMMAND } from '@lexical/list'
 
-import {$getSelection, $createTextNode, $getRoot} from 'lexical';
+import {
+    $isHeadingNode,
+    $createHeadingNode,
+    $createQuoteNode,
+
+} from "@lexical/rich-text";
+
+import {$getSelection, $createTextNode, $getRoot, $wrapNodes,} from 'lexical';
 
 import { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
 
@@ -17,26 +24,58 @@ const EditorCommandPanel = forwardRef((props, ref) => {
     const [editor] = useLexicalComposerContext(); 
     const [toolIcons, setToolIcons] = useState([]);
 
-
-    //customizing the enter command to insert new lines instead of new paragraphs. Since, by default Lexical creates a new 'p' tag. 
     editor.registerCommand(
         KEY_ENTER_COMMAND,
         (event) => {
-          event.preventDefault(); // Prevent the default behavior of creating a new <p> by lexical
+          event.preventDefault();
+
+          const selection = $getSelection();
+          const anchorNode = selection?.anchor.getNode();
           
+          if (anchorNode?.getParent().getType() === 'listitem') {
+            editor.update(() => {
+                const selection = $getSelection();  // Get the current selection
+                if ($isRangeSelection(selection)) {
+                    const newParagraph = $createParagraphNode();
+                    newParagraph.append($createTextNode());  // Add a space inside the paragraph
+                    selection.insertNodes([newParagraph]);
+                }
+            });
+            return false; // Let Lexical handle lists
+          }
+      
+          // Insert a new line
           editor.update(() => {
-            const selection = $getSelection();
-            if (selection) {
-              // Insert a line break or append text to the existing paragraph
-              const textNode = $createTextNode('\n'); // Adding a new line
-              selection.insertText(textNode.getTextContent());
-            }
+            const newTextnote = $createTextNode('\n');
+            selection.insertText(newTextnote.getTextContent());
           });
-          return true; // Mark the event as handled
+      
+          return true; // Custom behavior handled
         },
         COMMAND_PRIORITY_LOW
       );
-    
+      
+
+      
+      
+    //helper function for formatting heading.
+    const formatHeadingHelper = (headingType) =>{
+
+        editor.update(()=>{
+            const selection = $getSelection();
+
+            if(selection && $isRangeSelection(selection)){
+                const nodes = selection.getNodes(); //all the nodes from the selection. 
+
+                const headingNode = $createHeadingNode(headingType); //i.e, headingType === "h1" || "h2" || "h3"...
+                nodes.forEach((node, i)=>{
+                    node.replace(headingNode); //replace method in Lexical works to swap nodes in the editor document tree, here we swap with the heading node. 
+                    headingNode.append(node);
+                })
+              
+            }
+        })
+    }
 
     const handleToolIconClick = (iconKeyName) =>{
         //the commands are found from: https://github.com/facebook/lexical/blob/main/packages/lexical/src/LexicalEvents.ts
@@ -73,14 +112,15 @@ const EditorCommandPanel = forwardRef((props, ref) => {
         else if(iconKeyName === "strikethrough"){
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough"); //need to fix this
         }        
-        else if(iconKeyName === "h1"){
-            //need to fix this 
+        else if(iconKeyName === "h1" || iconKeyName === "h2" || iconKeyName === "h3"){
+            formatHeadingHelper(iconKeyName);
         }
-
     }
     useEffect(() =>{
         const icons = Object.keys(lexical_tool_commands).map(key => [key, lexical_tool_commands[key].icon]); // each item in icons array will be a array with the list [tool name, tool icon component]  
         setToolIcons(icons);
+
+        editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left"); //let the editor start with left align by default. 
 
     }, []);
 
@@ -129,7 +169,7 @@ const EditorCommandPanel = forwardRef((props, ref) => {
     }));
     
     return (
-        <div>
+        <div className='toolbar-container'>
             {toolIcons.map( (item, index) => (
                 <span key={index} className='tool-icons' onClick={() => handleToolIconClick(item[0])}>
                     {item[1]}

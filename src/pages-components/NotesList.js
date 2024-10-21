@@ -218,7 +218,7 @@ const NotesList = () => {
                             <input type="file" onChange={handleFileUpload}/>
 
                             <h1>OR</h1>
-                            <FaExpand className="expand-icon" onClick={handleExpandIconClick}/>
+                            
                             <NoteModal 
                                 modalIsOpen={modalIsOpen} 
                                 closeModal={closeModal} 
@@ -233,9 +233,10 @@ const NotesList = () => {
                                     value={noteTitle}     
                                     onChange={(e)=>{setNoteTitle(e.target.value)}}                       
                                 ></textarea>
-                                <Editor ref={lexicalEditorRef}/>
+                                <FaExpand className="expand-icon" onClick={handleExpandIconClick}/>
                             </div>
                         </div>
+                        <Editor className="main-editor-div" ref={lexicalEditorRef}/>
                         <div id="submit-div">
                             <button>Format Note</button>
                             <button onClick={handleOptimizeButtonClick}>Optimize Note</button>

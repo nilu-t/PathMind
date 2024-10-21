@@ -3,6 +3,7 @@ import { files } from './codeEditorConstants';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { VscRunAll } from "react-icons/vsc"; //from https://react-icons.github.io/react-icons/
 import { sendGetRequest, sendPostRequest } from '../api-tools/requests';
+import { useState } from 'react';
 
 /**
  * The monaco code editor will take up 100% of the width and height of the container element. 
@@ -19,6 +20,9 @@ const CodeEditor = forwardRef( ({codingLanguage, defaultContent=""}, ref) =>{
     let name = file.name;
     let defaultLanguage = file.defaultLanguage;
     let value = file.value;
+
+    const [codeOutput, setCodeOutput] = useState('');
+    const [isCodeRunning, setCodeRunning] = useState(false);
 
     if(defaultContent !== ""){
         value = defaultContent; //if defaultContent is provided we can just use that as the code inside the code editor. 
@@ -39,28 +43,47 @@ const CodeEditor = forwardRef( ({codingLanguage, defaultContent=""}, ref) =>{
     }
 
     const handleRunButtonClick = async() =>{
-        const data = 
-        {
-            "language": codingLanguage.toLowerCase(), 
-            "version": "*", //The '*' here allows for any version of the language to be executed. 
-            "files": [
-                {
-                    "name": file.name,
-                    "content":  monacoRef.current.getValue()
-                }
-            ]
-        }
 
-        const config ={
-            headers: {
-                'Content-Type': 'application/json'
+        try{
+            setCodeRunning(true);
+            setCodeOutput("Executing code..."); //letting the user know that the code is being executed as the API call to execute the code is asynchronous. 
+
+            const data = 
+            {
+                "language": codingLanguage.replaceAll(" ", "").toLowerCase(), //accounting for the special case with "C Sharp"
+                "version": "*", //The '*' here allows for any version of the language to be executed. 
+                "files": [
+                    {
+                        "name": file.name,
+                        "content":  monacoRef.current.getValue()
+                    }
+                ]
+            }
+
+            const config ={
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            const codeOutput = await sendPostRequest('https://emkc.org/api/v2/piston/execute', data, config); //from https://github.com/engineer-man/piston
+            
+            // alert(JSON.stringify(codeOutput, null, 2));
+            if(codeOutput.run.stderr){
+                setCodeOutput(codeOutput.run.stderr); //set the code output to be the error (i.e, runtime, syntax, etc.)
+            }
+            else{
+                setCodeOutput(codeOutput.run.stdout); //successful code output. 
             }
         }
-
-        const codeOutput = await sendPostRequest('https://emkc.org/api/v2/piston/execute', data, config); //from https://github.com/engineer-man/piston
-        alert(JSON.stringify(codeOutput, null, 2));
-        return codeOutput;
-
+        catch(error){
+            setCodeOutput("Error: Unable to execute code. Please try again later.");
+            console.error("Error while executing code:", error);
+        }
+        finally{
+            setCodeRunning(false); //the code has finished execution by this point. 
+        }
+            
     }
 
     useImperativeHandle(ref, ()=> ({
@@ -94,7 +117,7 @@ const CodeEditor = forwardRef( ({codingLanguage, defaultContent=""}, ref) =>{
                 className='code-editor-output'
                 readOnly={true}
                 placeholder='Click on RUN button to see the output'
-                // value="code output..."
+                value={codeOutput}
             ></textarea>
         </div>
     );

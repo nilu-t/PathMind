@@ -807,6 +807,7 @@ html {
 
 .code-editor-output{
   align-self: center;
+  color: #ffffffa1;
   width: 80%;
   height: 25%;
   background-color: #0000006d;
@@ -814,6 +815,7 @@ html {
   border: none;
   box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  padding: 10px;
 }
 
 .code-editor-output::placeholder{

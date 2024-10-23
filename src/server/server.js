@@ -102,6 +102,7 @@ app.post("/add_user", (req, res) => {
 // POST request to route '/add_note'
 app.post("/add_note", (req, res) => {
     const subject = req.body.subject;
+    const editor_state = JSON.stringify(req.body.editorState); //making sure to serialize the JSON before adding it. 
     const note_content = decodeURIComponent(req.body.noteContent);
     const note_title = req.body.noteTitle;
     const code_content = decodeURIComponent(req.body.codeContent);
@@ -114,8 +115,8 @@ app.post("/add_note", (req, res) => {
         } else {
             if (results.length > 0) {
                 // Insert notes data into the notes table
-                let noteQuery = `INSERT INTO notes (note_title, note_subject, note_description, code_snippet, user_email) VALUES (?, ?, ?, ?, ?)`;
-                con.query(noteQuery, [note_title, subject, note_content, code_content, user_email], (error, results) => {
+                let noteQuery = `INSERT INTO notes (note_title, note_subject, note_description, code_snippet, user_email, editor_state) VALUES (?, ?, ?, ?, ?, ?)`;
+                con.query(noteQuery, [note_title, subject, note_content, code_content, user_email, editor_state], (error, results) => {
                     if (error) {
                         res.send(error);
                     } else {

@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import firebase from 'firebase/compat/app'; // for backward compatibility
 import 'firebase/compat/auth'; // for backward compatibility
-import { FaExpand, FaChevronDown} from "react-icons/fa"; //from https://react-icons.github.io/react-icons/
+import { FaExpand} from "react-icons/fa"; //from https://react-icons.github.io/react-icons/
 import { MdDeleteForever } from "react-icons/md"; //from https://react-icons.github.io/react-icons/
 import { FaFilePdf } from "react-icons/fa6"; //from https://react-icons.github.io/react-icons/
 import CodeEditor from "../code-editor-components/CodeEditor";
@@ -76,7 +76,6 @@ const NotesList = () => {
 
             let fileContent = await sendPostRequest('http://localhost:8000/upload_note', formData, config);
             lexicalEditorRef.current.setNoteContent(fileContent.content);
-            // setNoteContent(fileContent.content); //update the note content to display the parsed PDF file.
             setNoteTitle(fileContent.name); //update the note title of the PDF file. 
         }
         else{
@@ -123,9 +122,12 @@ const NotesList = () => {
             setNoteAddMessage(`You have added note: ${noteTitle}`); 
 
             setNumSubmitted(0);
+            
+            const editorState = lexicalEditorRef.current.getEditorStateJSON(); // Serialize the state to JSON
 
             const data = {
                 noteTitle: noteTitle,
+                editorState: editorState,
                 noteContent: encodeURIComponent(noteContent),
                 codeContent: encodeURIComponent(codeSnippet),
                 userEmail: userEmail,
@@ -151,12 +153,8 @@ const NotesList = () => {
       setModalIsOpen(false);
     };
 
-    const handleExpandIconClick = (event) => {
-        // alert("hello");
-        // Example usage
+    const handleExpandIconClick = (event) => { 
         openModal();
-
-        // lexicalEditorRef.current.setNoteContent(lexicalEditorRef.current.getNoteContent())
     }
 
     let seenTitles = {};
@@ -182,7 +180,9 @@ const NotesList = () => {
                         event.preventDefault(); // since we're deleting the note, prevent the default behavior which is redirecting to the note link 
                         event.stopPropagation();  //we're deleting the note, so we don't want to redirect to the note compontent. 
                         handleDeleteButtonClick(noteObj.note_title)
-                    }}><MdDeleteForever className="delete-icon"/></button>
+                    }}>
+                    <MdDeleteForever className="delete-icon"/>
+                    </button>
                 </p>
             </Link>
         );

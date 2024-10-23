@@ -11,7 +11,6 @@ import { useState } from 'react';
  * 
  * To run code I used the following Piston API: https://piston.readthedocs.io/en/latest/api-v2/
  * 
- * 
  */
 
 const CodeEditor = forwardRef( ({codingLanguage, defaultContent=""}, ref) =>{

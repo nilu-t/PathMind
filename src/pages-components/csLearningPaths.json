@@ -1,56 +1,69 @@
 {
-    "learningPaths": [
-      {
-        "title": "Popular Programming Languages",
-        "description": "Overview of the most commonly used programming languages.",
-        "subjects": ["Python", "JavaScript", "Java", "C++", "C#", "Go", "Ruby", "Kotlin", "Rust"]
-      },
-      {
-        "title": "Front-End Development",
-        "description": "Learn how to build the user interface and experience.",
-        "subjects": ["HTML", "CSS", "JavaScript", "React", "Vue"]
-      },
-      {
-        "title": "Back-End Development",
-        "description": "Focuses on server-side logic and databases.",
-        "subjects": ["Node.js", "Ruby on Rails", "Django"]
-      },
-      {
-        "title": "Full-Stack Development",
-        "description": "Covers both front-end and back-end development.",
-        "subjects": ["HTML", "CSS", "JavaScript", "Node.js", "MongoDB"]
-      },
-      {
-        "title": "Machine Learning",
-        "description": "Introduction to algorithms and data models.",
-        "subjects": ["Python", "TensorFlow", "Scikit-Learn"]
-      },
-      {
-        "title": "Artificial Intelligence",
-        "description": "Study of intelligent agent behavior.",
-        "subjects": ["Python", "Neural Networks", "NLP"]
-      },
-      {
-        "title": "Cybersecurity",
-        "description": "Learn to protect systems from digital attacks.",
-        "subjects": ["Cryptography", "Network Security", "Ethical Hacking"]
-      },
-      {
-        "title": "Game Development",
-        "description": "Learn to create video games for various platforms.",
-        "subjects": ["Unity", "C#", "3D Modeling"]
-      },
-      {
-        "title": "Cloud Computing",
-        "description": "Introduction to cloud-based services and storage solutions.",
-        "subjects": ["AWS", "Azure", "Google Cloud"]
-      },
-      {
-        "title": "Data Science",
-        "description": "Analyzing and interpreting complex data.",
-        "subjects": ["Python", "R", "Data Visualization"]
-      }
-
-    ]
+  "learningPaths": [
+    {
+      "title": "Popular Programming Languages",
+      "description": "Overview of the most commonly used programming languages.",
+      "subjects": ["Python", "JavaScript", "Java", "C++", "C#", "Go", "Ruby", "Kotlin", "Rust"]
+    },
+    {
+      "title": "Scripting Languages",
+      "description": "Languages often used for automating tasks, web development, and rapid prototyping.",
+      "subjects": ["JavaScript", "TypeScript", "PHP", "Bash", "Powershell", "Go", "Lua", "CoffeeScript", "File", "Emacs", "Dash"]
+    },
+    {
+      "title": "Object-Oriented Languages",
+      "description": "Languages that follow the object-oriented programming paradigm, using classes and objects to structure programs.",
+      "subjects": ["Java", "C#", "Kotlin", "Swift", "Dart", "Crystal", "Ruby", "Python", "Perl", "Smalltalk", "Scala", "Groovy", "Julia", "Pascal", "FreeBasic"]
+    },
+    {
+      "title": "Functional Languages",
+      "description": "Languages that emphasize functional programming paradigms, focusing on immutability and pure functions.",
+      "subjects": ["Haskell", "FSharp.NET", "Elixir", "OCaml", "Lisp", "Racket", "Clojure", "Pure", "Erlang"]
+    },
+    {
+      "title": "Assembly Languages",
+      "description": "Low-level programming languages that are closely tied to machine architecture and hardware instructions.",
+      "subjects": ["NASM", "LLVM_IR"]
+    },
+    {
+      "title": "Data Science and Statistical Languages",
+      "description": "Languages used for data manipulation, analysis, and statistical computing.",
+      "subjects": ["RScript", "Octave", "SQLite3"]
+    },
+    {
+      "title": "Esoteric Languages",
+      "description": "Programming languages created as jokes, for experimentation, or for specialized applications, often with obscure syntax.",
+      "subjects": ["Brainfuck", "Befunge93", "Cow", "LOLCode", "Rockstar", "Emojicode", "Yeethon", "Pyth", "Jelly", "Japt", "Vyxal"]
+    },
+    {
+      "title": "Code-Golf Languages",
+      "description": "Languages designed for solving problems with the fewest number of characters possible, often used in code-golf challenges.",
+      "subjects": ["BQN", "GolfScript", "MATL", "Brachylog", "CJam", "Paradoc"]
+    },
+    {
+      "title": "SQL and Database Languages",
+      "description": "Languages used to manage and query databases, including SQL variants.",
+      "subjects": ["SQLite3"]
+    },
+    {
+      "title": "Hardware Description Languages",
+      "description": "Languages used to describe the behavior and structure of electronic circuits, primarily for simulation and design.",
+      "subjects": ["IVerilog"]
+    },
+    {
+      "title": "Procedural Languages",
+      "description": "Languages that follow the procedural programming paradigm, emphasizing a step-by-step approach to problem-solving.",
+      "subjects": ["COBOL", "Forth", "Dragon", "Forte"]
+    },
+    {
+      "title": "Logical and Constraint Programming Languages",
+      "description": "Languages that are based on formal logic and are used for solving constraint satisfaction problems.",
+      "subjects": ["Prolog"]
+    },
+    {
+      "title": "Miscellaneous or Novel Languages",
+      "description": "Languages with unique or experimental features, used for niche applications or exploration.",
+      "subjects": ["Vyxal", "Yeethon", "Osabie"]
+    }
+  ]
 }
-  
